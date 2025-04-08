@@ -454,66 +454,284 @@
     </div>
 
     <script>
-        // Series data (same as in index.html)
+        // Complete series data for all series
         const seriesData = {
-            "sisterhood": {
-                title: "Sisterhood",
+            "mirzapur": {
+                title: "Mirzapur",
+                season: "Season 3",
+                creator: "Excel Entertainment",
+                synopsis: "A shocking assassination at a wedding procession ignites a series of events entangling the lives of two families in the lawless city of Mirzapur.",
+                cast: "Starring: Pankaj Tripathi, Ali Fazal, Vikrant Massey, Divyendu Sharma",
+                language: "Language: Hindi",
+                genre: "Genre: Crime, Action",
+                image: "images/sample19.jpg",
+                episodes: generateRandomEpisodes("Mirzapur", 8)
+            },
+            "family-man": {
+                title: "The Family Man",
+                season: "Season 2",
+                creator: "Raj & DK",
+                synopsis: "A middle-class man secretly works as an intelligence officer for the National Investigation Agency while trying to balance his family life.",
+                cast: "Starring: Manoj Bajpayee, Priyamani, Sharib Hashmi, Samantha Akkineni",
+                language: "Language: Hindi, Tamil",
+                genre: "Genre: Action, Thriller",
+                image: "images/sample18.jpg",
+                episodes: generateRandomEpisodes("The Family Man", 9)
+            },
+            "panchayat": {
+                title: "Panchayat",
+                season: "Season 2",
+                creator: "TVF",
+                synopsis: "An engineering graduate takes up a job as a Panchayat secretary in a remote village due to lack of better options.",
+                cast: "Starring: Jitendra Kumar, Neena Gupta, Raghubir Yadav, Chandan Roy",
+                language: "Language: Hindi",
+                genre: "Genre: Comedy, Drama",
+                image: "images/sample17.jpg",
+                episodes: generateRandomEpisodes("Panchayat", 8)
+            },
+            "aspirants": {
+                title: "Aspirants",
                 season: "Season 1",
                 creator: "TVF",
-                synopsis: "Nikita must pay a fine but doesn't have the money for it and plans to steal from the might box by crossing Gargi, the new entrant. Zoya must help Ann, the repeater to improve her grades this year.",
-                cast: "Starring: Nidhi Bhanushali, Bhagyashree Limaye, Anvesha Vij, Nitya Mathur, Saumya Uniyal",
+                synopsis: "The lives of three friends preparing for UPSC exams in Delhi's Old Rajinder Nagar, and how their friendship evolves over time.",
+                cast: "Starring: Naveen Kasturia, Shivankit Singh Parihar, Abhilash Thapliyal",
                 language: "Language: Hindi",
-                genre: "Genre: Drama, Comedy",
-                image: "images/sample19.jpg",
-                episodes: [
-                    {
-                        number: "E1",
-                        title: "The First Day",
-                        synopsis: "Nikita must pay a fine but doesn't have the money for it and plans to steal from the might box by crossing Gargi, the new entrant. Zoya must help Ann, the repeater to improve her grades this year.",
-                        date: "Jun 13, 2024",
-                        duration: "25 min",
-                        videoUrl: "videos/sisterhood-ep1.mp4"
-                    },
-                    {
-                        number: "E2",
-                        title: "New Challenges",
-                        synopsis: "The girls face new challenges as they navigate through college life and friendships.",
-                        date: "Jun 20, 2024",
-                        duration: "24 min",
-                        videoUrl: "videos/sisterhood-ep2.mp4"
-                    }
-                ]
+                genre: "Genre: Drama",
+                image: "images/sample16.jpg",
+                episodes: generateRandomEpisodes("Aspirants", 5)
             },
-            "scam-1992": {
-                title: "Scam 1992",
+            "kota-factory": {
+                title: "Kota Factory",
+                season: "Season 3",
+                creator: "TVF",
+                synopsis: "Life of students preparing for engineering entrance exams in Kota, the coaching capital of India.",
+                cast: "Starring: Mayur More, Jitendra Kumar, Ranjan Raj, Alam Khan",
+                language: "Language: Hindi",
+                genre: "Genre: Comedy, Drama",
+                image: "images/sample15.jpg",
+                episodes: generateRandomEpisodes("Kota Factory", 5)
+            },
+            "gullak": {
+                title: "Gullak",
+                season: "Season 4",
+                creator: "TVF",
+                synopsis: "A heartwarming story of a middle-class family in small-town India and their everyday struggles and joys.",
+                cast: "Starring: Jameel Khan, Geetanjali Kulkarni, Vaibhav Raj Gupta, Harsh Mayar",
+                language: "Language: Hindi",
+                genre: "Genre: Comedy, Drama",
+                image: "images/sample14.jpg",
+                episodes: generateRandomEpisodes("Gullak", 8)
+            },
+            "ertugrul": {
+                title: "Diriliş: Ertuğrul",
+                season: "Season 5",
+                creator: "Mehmet Bozdağ",
+                synopsis: "The story of Ertuğrul, the father of Osman I, founder of the Ottoman Empire, and his struggles to establish a state.",
+                cast: "Starring: Engin Altan Düzyatan, Esra Bilgiç, Kaan Taşaner",
+                language: "Language: Turkish",
+                genre: "Genre: Historical, Drama",
+                image: "images/sample13.jpg",
+                episodes: generateRandomEpisodes("Ertugrul", 30)
+            },
+            "osman": {
+                title: "Kuruluş: Osman",
+                season: "Season 4",
+                creator: "Mehmet Bozdağ",
+                synopsis: "The life of Osman I, founder of the Ottoman Empire, as he establishes and defends his principality.",
+                cast: "Starring: Burak Özçivit, Yıldız Çağrı Atiksoy, Özge Törer",
+                language: "Language: Turkish",
+                genre: "Genre: Historical, Action",
+                image: "images/sample12.jpg",
+                episodes: generateRandomEpisodes("Osman", 28)
+            },
+            "magnificent-century": {
+                title: "Muhteşem Yüzyıl",
+                season: "Season 4",
+                creator: "Tims Productions",
+                synopsis: "The story of Sultan Suleiman the Magnificent and his wife Hürrem Sultan, one of the most powerful women in Ottoman history.",
+                cast: "Starring: Halit Ergenç, Meryem Uzerli, Nebahat Çehre",
+                language: "Language: Turkish",
+                genre: "Genre: Historical, Drama",
+                image: "images/sample10.jpg",
+                episodes: generateRandomEpisodes("Magnificent Century", 24)
+            },
+            "protector": {
+                title: "The Protector",
+                season: "Season 4",
+                creator: "Binnur Karaevli",
+                synopsis: "A young man discovers he's part of a secret ancient order and must protect Istanbul from immortal enemies.",
+                cast: "Starring: Çağatay Ulusoy, Hazar Ergüçlü, Okan Yalabık",
+                language: "Language: Turkish",
+                genre: "Genre: Fantasy, Action",
+                image: "images/sample9.jpg",
+                episodes: generateRandomEpisodes("The Protector", 8)
+            },
+            "ethos": {
+                title: "Ethos",
                 season: "Season 1",
-                creator: "Hansal Mehta",
-                synopsis: "The rise and fall of India's most infamous stockbroker, Harshad Mehta, who took the stock market to dizzying heights and his catastrophic downfall.",
-                cast: "Starring: Pratik Gandhi, Shreya Dhanwanthary, Hemant Kher",
-                language: "Language: Hindi",
-                genre: "Genre: Drama, Crime",
-                image: "images/sample18.jpg",
-                episodes: [
-                    {
-                        number: "E1",
-                        title: "The Big Bull",
-                        synopsis: "Harshad Mehta arrives in Mumbai with dreams of making it big in the stock market.",
-                        date: "Oct 9, 2020",
-                        duration: "54 min",
-                        videoUrl: "videos/scam1992-ep1.mp4"
-                    },
-                    {
-                        number: "E2",
-                        title: "The System",
-                        synopsis: "Harshad learns the ropes of the stock market and discovers loopholes in the system.",
-                        date: "Oct 9, 2020",
-                        duration: "52 min",
-                        videoUrl: "videos/scam1992-ep2.mp4"
-                    }
-                ]
+                creator: "Berkun Oya",
+                synopsis: "The lives of people from different socioeconomic backgrounds intersect in Istanbul, revealing Turkey's social dynamics.",
+                cast: "Starring: Öykü Karayel, Fatih Artman, Defne Kayalar",
+                language: "Language: Turkish",
+                genre: "Genre: Drama",
+                image: "images/sample8.jpg",
+                episodes: generateRandomEpisodes("Ethos", 8)
             },
-            // Add similar data for all other series
+            "gift": {
+                title: "The Gift",
+                season: "Season 3",
+                creator: "Jason George",
+                synopsis: "An artist discovers mysterious symbols in Göbeklitepe that connect to her past and the origins of civilization.",
+                cast: "Starring: Beren Saat, Mehmet Günsür, Metin Akdülger",
+                language: "Language: Turkish",
+                genre: "Genre: Drama, Mystery",
+                image: "images/sample7.jpg",
+                episodes: generateRandomEpisodes("The Gift", 8)
+            },
+            "tripling": {
+                title: "Tripling",
+                season: "Season 3",
+                creator: "TVF",
+                synopsis: "Three siblings embark on a road trip to find themselves and rediscover their bond after their parents decide to divorce.",
+                cast: "Starring: Sumeet Vyas, Amol Parashar, Maanvi Gagroo",
+                language: "Language: Hindi",
+                genre: "Genre: Comedy, Drama",
+                image: "images/sample6.jpg",
+                episodes: generateRandomEpisodes("Tripling", 5)
+            },
+            "pitchers": {
+                title: "Pitchers",
+                season: "Season 2",
+                creator: "TVF",
+                synopsis: "Four young entrepreneurs quit their jobs to start their own company and face the challenges of the startup world.",
+                cast: "Starring: Naveen Kasturia, Arunabh Kumar, Jitendra Kumar",
+                language: "Language: Hindi",
+                genre: "Genre: Comedy, Drama",
+                image: "images/sample5.jpg",
+                episodes: generateRandomEpisodes("Pitchers", 5)
+            },
+            "cubicles": {
+                title: "Cubicles",
+                season: "Season 2",
+                creator: "TVF",
+                synopsis: "A fresh graduate navigates corporate life, office politics, and personal growth in his first job at a multinational company.",
+                cast: "Starring: Abhishek Chauhan, Nidhi Bisht, Badri Chavan",
+                language: "Language: Hindi",
+                genre: "Genre: Comedy, Drama",
+                image: "images/sample3.jpg",
+                episodes: generateRandomEpisodes("Cubicles", 5)
+            },
+            "engineering-girls": {
+                title: "Engineering Girls",
+                season: "Season 1",
+                creator: "TVF",
+                synopsis: "The lives of three female engineering students as they navigate college, friendships, and societal expectations.",
+                cast: "Starring: Nidhi Bhanushali, Nupur Nagpal, Simran Natekar",
+                language: "Language: Hindi",
+                genre: "Genre: Comedy",
+                image: "images/sample2.jpg",
+                episodes: generateRandomEpisodes("Engineering Girls", 5)
+            },
+            "hostel-daze": {
+                title: "Hostel Daze",
+                season: "Season 3",
+                creator: "TVF",
+                synopsis: "The hilarious and chaotic lives of four engineering students living in a hostel, dealing with studies, friendships, and college life.",
+                cast: "Starring: Adarsh Gourav, Luv Vispute, Shubham Gaur, Nikhil Vijay",
+                language: "Language: Hindi",
+                genre: "Genre: Comedy",
+                image: "images/sample1.jpg",
+                episodes: generateRandomEpisodes("Hostel Daze", 5)
+            }
         };
+
+        // Function to generate random episodes
+        function generateRandomEpisodes(seriesName, count) {
+            const episodes = [];
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const currentYear = new Date().getFullYear();
+            
+            for (let i = 1; i <= count; i++) {
+                const randomMonth = months[Math.floor(Math.random() * months.length)];
+                const randomDay = Math.floor(Math.random() * 28) + 1;
+                const randomYear = currentYear - Math.floor(Math.random() * 3);
+                const randomDuration = Math.floor(Math.random() * 10) + 20; // 20-30 minutes
+                
+                episodes.push({
+                    number: `E${i}`,
+                    title: getRandomEpisodeTitle(seriesName, i),
+                    synopsis: getRandomSynopsis(seriesName, i),
+                    date: `${randomMonth} ${randomDay}, ${randomYear}`,
+                    duration: `${randomDuration} min`,
+                    videoUrl: `videos/${seriesName.toLowerCase().replace(/\s+/g, '-')}-ep${i}.mp4`
+                });
+            }
+            return episodes;
+        }
+
+        // Helper functions for generating random content
+        function getRandomEpisodeTitle(seriesName, episodeNum) {
+            const titles = {
+                "Mirzapur": ["The King of Mirzapur", "Blood Feud", "Power Play", "Family Matters", "Revenge"],
+                "The Family Man": ["Mission Begins", "Undercover", "The Threat", "Betrayal", "Final Showdown"],
+                "Panchayat": ["New Beginnings", "Village Politics", "Unexpected Guest", "Festival Time", "Departure"],
+                "Aspirants": ["First Attempt", "Study Pressure", "Exam Day", "Results", "New Journey"],
+                "Kota Factory": ["New Batch", "Teacher's Pet", "Mid-Terms", "Competition", "Final Push"],
+                "Gullak": ["Monthly Budget", "Family Trip", "School Admissions", "Festival Shopping", "Anniversary"],
+                "Ertugrul": ["The New Land", "Enemy Attack", "Alliance", "Betrayal", "Victory"],
+                "Osman": ["Rise of a Leader", "Battle Plans", "New Allies", "Empire Building", "Legacy"],
+                "Magnificent Century": ["Royal Wedding", "Palace Intrigue", "War Council", "Exile", "Return"],
+                "The Protector": ["Ancient Secret", "First Mission", "Enemy Revealed", "Final Battle", "Destiny"],
+                "Ethos": ["First Session", "Family Secrets", "Social Divide", "Truth Revealed", "New Beginnings"],
+                "The Gift": ["Ancient Symbols", "Mysterious Past", "Hidden Truth", "Final Revelation", "Destiny"],
+                "Tripling": ["Road Trip Begins", "Lost and Found", "Family Secrets", "Unexpected Detour", "Homecoming"],
+                "Pitchers": ["Startup Idea", "First Pitch", "Investor Meeting", "Product Launch", "Success"],
+                "Cubicles": ["First Day", "Office Politics", "Big Project", "Promotion", "Career Move"],
+                "Engineering Girls": ["College Start", "Mid-Terms", "Hackathon", "Placements", "Graduation"],
+                "Hostel Daze": ["New Roommate", "Ragging Days", "Exam Pressure", "Festival Time", "Last Semester"]
+            };
+            
+            const seriesTitles = titles[seriesName] || ["The Beginning", "New Challenges", "Turning Point", "Finale"];
+            return seriesTitles[episodeNum % seriesTitles.length] || `Episode ${episodeNum}`;
+        }
+
+        function getRandomSynopsis(seriesName, episodeNum) {
+            const synopses = {
+                "Mirzapur": [
+                    "The power struggle in Mirzapur intensifies as new alliances are formed.",
+                    "A shocking betrayal changes the dynamics between the rival families.",
+                    "The hunt for revenge leads to unexpected consequences.",
+                    "A wedding celebration turns into a bloodbath.",
+                    "The final confrontation decides the fate of Mirzapur."
+                ],
+                "The Family Man": [
+                    "An undercover mission puts the protagonist in grave danger.",
+                    "A terrorist plot threatens the nation's security.",
+                    "The line between personal and professional life blurs.",
+                    "A mole in the agency is revealed.",
+                    "The final showdown with the terrorists."
+                ],
+                "Panchayat": [
+                    "The secretary faces new challenges in the village.",
+                    "A dispute between villagers requires mediation.",
+                    "Festival preparations bring the community together.",
+                    "An unexpected guest causes chaos in the village.",
+                    "The secretary must make a difficult decision about his future."
+                ]
+                // Add more series synopses as needed
+            };
+            
+            const defaultSynopses = [
+                `In this episode, the characters face new challenges as the story progresses.`,
+                `A turning point in the series as secrets are revealed.`,
+                `The tension builds as the characters deal with unexpected situations.`,
+                `Relationships are tested as the plot thickens.`,
+                `The episode concludes with a cliffhanger that sets up the next chapter.`
+            ];
+            
+            const seriesSynopses = synopses[seriesName] || defaultSynopses;
+            return seriesSynopses[episodeNum % seriesSynopses.length] || defaultSynopses[0];
+        }
 
         // DOM Elements
         const vdo_container = document.querySelector(".video-container");
@@ -525,7 +743,7 @@
 
         // Load series data when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            const seriesId = localStorage.getItem('selectedSeries') || 'sisterhood';
+            const seriesId = localStorage.getItem('selectedSeries') || 'mirzapur';
             const series = seriesData[seriesId];
             
             if (series) {
@@ -555,9 +773,13 @@
                 if (series.episodes.length > 0) {
                     const firstEpisode = series.episodes[0];
                     document.getElementById('episode-title').textContent = firstEpisode.title;
+                    document.getElementById('series-episode').textContent = `Episode 1`;
                     
                     // Update continue watching button
                     document.querySelector('.button-title').textContent = `Continue Watching ${series.season} E1`;
+                    
+                    // Set video source for the first episode
+                    video.src = series.episodes[0].videoUrl;
                 }
                 
                 // Update episodes list
@@ -591,11 +813,6 @@
                     `;
                     episodesList.appendChild(episodeElement);
                 });
-                
-                // Set video source for the first episode
-                if (series.episodes.length > 0) {
-                    video.src = series.episodes[0].videoUrl;
-                }
             }
         });
 
@@ -620,19 +837,6 @@
             video.pause();
         });
 
-        // Add click handlers for episode play buttons
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.play-episode') || e.target.closest('.thumbnail-card') || e.target.closest('.play-icon')) {
-                const seriesId = localStorage.getItem('selectedSeries') || 'sisterhood';
-                const series = seriesData[seriesId];
-                const episodeIndex = e.target.closest('.play-episode')?.getAttribute('data-index') || 0;
-                
-                if (series && series.episodes[episodeIndex]) {
-                    video.src = series.episodes[episodeIndex].videoUrl;
-                    video_play();
-                }
-            }
-        });
     </script>
 </body>
 </html>

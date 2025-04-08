@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="\admin\css\admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        .profile-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .profile-header h1 {
+            color: #232f3e;
+            font-size: 1.8rem;
+        }
+        
+        .profile-content {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .profile-sidebar {
+            width: 250px;
+        }
+        
+        .profile-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #f5f5f5;
+            margin-bottom: 20px;
+        }
+        
+        .profile-main {
+            flex: 1;
+        }
+        
+        .profile-card {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-card h2 {
+            margin-bottom: 20px;
+            color: #232f3e;
+            font-size: 1.3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .save-btn {
+            background: #ff9900;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .save-btn:hover {
+            background: #e68a00;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #232f3e;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="upload-series.html"><i class="fas fa-film"></i> Upload Series</a>
+                <a href="upload-episode.html"><i class="fas fa-video"></i> Upload Episode</a>
+                <a href="upload-short.html"><i class="fas fa-photo-video"></i> Upload Short</a>
+                <a href="manage-content.html"><i class="fas fa-edit"></i> Manage Content</a>
+                <a href="profile.html" class="active"><i class="fas fa-user"></i> My Profile</a>
+                <a href="\index.html" id="admin-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </nav>
+        </aside>
+        
+        <main class="admin-main">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <h1>My Profile</h1>
+                </div>
+                
+                <div class="profile-content">
+                    <div class="profile-sidebar">
+                        <img src="admin.jpg" alt="Profile Picture" class="profile-avatar" id="profile-picture">
+                        <input type="file" id="profile-picture-upload" accept="image/*" style="display: none;">
+                        <button class="save-btn" style="width: 100%;" onclick="document.getElementById('profile-picture-upload').click()">
+                            <i class="fas fa-camera"></i> Change Photo
+                        </button>
+                        
+                        <div class="profile-card" style="margin-top: 30px;">
+                            <h2>Stats</h2>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <h3>Uploads</h3>
+                                    <p id="uploads-count">20</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Views</h3>
+                                    <p id="views-count">5</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-main">
+                        <div class="profile-card">
+                            <h2>Personal Information</h2>
+                            <form id="profile-form">
+                                <div class="form-group">
+                                    <label for="display-name">Display Name</label>
+                                    <label for="display-name">SYSTEM ADMIN</label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" disabled>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <input type="text" id="role" value="Admin" disabled>
+                                </div>
+                                <p id="profile-status" style="margin-top: 15px;"></p>
+                            </form>
+                        </div>
+                        
+                        <div class="profile-card">
+                            <h2>Change Password</h2>
+                            <form id="password-form">
+                                <div class="form-group">
+                                    <label for="current-password">Current Password</label>
+                                    <input type="password" id="current-password" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="new-password">New Password</label>
+                                    <input type="password" id="new-password" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="confirm-password">Confirm Password</label>
+                                    <input type="password" id="confirm-password" required>
+                                </div>
+                                
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-key"></i> Change Password
+                                </button>
+                                <p id="password-status" style="margin-top: 15px;"></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="\admin\js\firebase-config.js"></script>
+    <script>
+        // Initialize Firebase
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage(); // Storage initialization
+        
+        // Load profile data
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // Load user data
+                document.getElementById('display-name').value = user.displayName || '';
+                document.getElementById('email').value = user.email;
+                
+                // Load profile picture if exists
+                if (user.photoURL) {
+                    document.getElementById('profile-picture').src = user.photoURL;
+                }
+                
+                // Load stats
+                loadUserStats(user.uid);
+            }
+        });
+        
+        // Profile picture upload
+        document.getElementById('profile-picture-upload').addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    document.getElementById('profile-picture').src = e.target.result;
+                    
+                    // Upload to Firebase Storage
+                    const user = auth.currentUser;
+                    if (user) {
+                        const storageRef = storage.ref(`profile-pictures/${user.uid}`);
+                        const uploadTask = storageRef.put(file);
+                        
+                        uploadTask.on('state_changed', 
+                            (snapshot) => {
+                                // Progress handling
+                                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                console.log('Upload is ' + progress + '% done');
+                            },
+                            (error) => {
+                                console.error('Upload failed:', error);
+                            },
+                            () => {
+                                // Upload completed
+                                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                                    // Update user profile
+                                    user.updateProfile({
+                                        photoURL: downloadURL
+                                    }).then(() => {
+                                        console.log('Profile picture updated');
+                                    }).catch((error) => {
+                                        console.error('Error updating profile:', error);
+                                    });
+                                });
+                            }
+                        );
+                    }
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Profile form submission
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const displayName = document.getElementById('display-name').value;
+            const statusElement = document.getElementById('profile-status');
+            
+            const user = auth.currentUser;
+            if (user) {
+                user.updateProfile({
+                    displayName: displayName
+                }).then(() => {
+                    statusElement.textContent = 'Profile updated successfully!';
+                    statusElement.style.color = 'green';
+                    
+                    // Update in Firestore if admin
+                    db.collection('admins').doc(user.uid).get().then(doc => {
+                        if (doc.exists) {
+                            doc.ref.update({
+                                displayName: displayName
+                            });
+                        }
+                    });
+                }).catch((error) => {
+                    statusElement.textContent = 'Error: ' + error.message;
+                    statusElement.style.color = 'red';
+                });
+            }
+        });
+        
+        // Password form submission
+        document.getElementById('password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const statusElement = document.getElementById('password-status');
+            
+            if (newPassword !== confirmPassword) {
+                statusElement.textContent = 'New passwords do not match';
+                statusElement.style.color = 'red';
+                return;
+            }
+            
+            const user = auth.currentUser;
+            const credential = firebase.auth.EmailAuthProvider.credential(
+                user.email, 
+                currentPassword
+            );
+            
+            // Reauthenticate user
+            user.reauthenticateWithCredential(credential).then(() => {
+                // Change password
+                user.updatePassword(newPassword).then(() => {
+                    statusElement.textContent = 'Password changed successfully!';
+                    statusElement.style.color = 'green';
+                    this.reset();
+                }).catch((error) => {
+                    statusElement.textContent = 'Error: ' + error.message;
+                    statusElement.style.color = 'red';
+                });
+            }).catch((error) => {
+                statusElement.textContent = 'Error: Current password is incorrect';
+                statusElement.style.color = 'red';
+            });
+        });
+        
+        // Load user stats
+        function loadUserStats(userId) {
+            // Count uploaded series
+            db.collection('series').where('uploadedBy', '==', userId).get().then(snapshot => {
+                document.getElementById('uploads-count').textContent = snapshot.size;
+            });
+            
+            // Sum all views from uploaded content
+            let totalViews = 0;
+            
+            db.collection('series').where('uploadedBy', '==', userId).get().then(snapshot => {
+                snapshot.forEach(doc => {
+                    totalViews += doc.data().views || 0;
+                });
+                
+                db.collection('shorts').where('uploadedBy', '==', userId).get().then(snapshot => {
+                    snapshot.forEach(doc => {
+                        totalViews += doc.data().views || 0;
+                    });
+                    
+                    document.getElementById('views-count').textContent = totalViews;
+                });
+            });
+        }
+        
+        // Logout functionality
+        document.getElementById('admin-logout').addEventListener('click', () => {
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>

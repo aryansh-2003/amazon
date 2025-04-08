@@ -972,7 +972,7 @@
                 <div class="footer-links">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
-                    <a href="admin\admin\admin-login.html">Admin Panel</a>
+                    <a href="admin-login.html">Admin Panel</a>
                     <a href="#">Compliance Report</a>
                 </div>
             </div>
@@ -1337,6 +1337,19 @@
                     // In a real app, you would fetch more data here
                 }
             });
+            // Add click event to series cards to redirect to page2.html with series data
+document.querySelectorAll('.content-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+        e.preventDefault();
+        const seriesId = card.getAttribute('data-series');
+        
+        // Store the selected series ID in localStorage
+        localStorage.setItem('selectedSeries', seriesId);
+        
+        // Redirect to page2.html
+        window.location.href = 'page2.html';
+    });
+});
         });
     </script>
 </body>
