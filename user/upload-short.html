@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Short | Amazon Mini TV Clone</title>
+    <link rel="stylesheet" href="../../css/user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="user-navbar">
+        <div class="logo">
+            <img src="../../images/amazon-mini-logo.jpg" alt="Amazon Mini TV">
+        </div>
+        <div class="user-nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="upload-short.html" class="active">Upload Short</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="profile.html">Profile</a>
+        </div>
+        <div class="user-auth-buttons">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </nav>
+
+    <div class="upload-container">
+        <h1>Upload Your Short</h1>
+        
+        <div class="upload-box" id="upload-box">
+            <div class="upload-instructions">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag and drop your video file here</p>
+                <p>or</p>
+                <button id="select-file-btn">Select File</button>
+                <input type="file" id="video-file" accept="video/*" style="display: none;">
+                <p class="file-requirements">Max file size: 50MB • Max duration: 60 seconds</p>
+            </div>
+        </div>
+        
+        <div class="video-preview" id="video-preview" style="display: none;">
+            <video id="preview-video" controls></video>
+            <div class="video-controls">
+                <button id="trim-btn"><i class="fas fa-cut"></i> Trim</button>
+                <button id="add-filter-btn"><i class="fas fa-sliders-h"></i> Filters</button>
+                <button id="add-text-btn"><i class="fas fa-font"></i> Text</button>
+            </div>
+        </div>
+        
+        <div class="video-details" id="video-details" style="display: none;">
+            <h2>Video Details</h2>
+            <div class="form-group">
+                <label for="video-title">Title</label>
+                <input type="text" id="video-title" placeholder="Enter a catchy title">
+            </div>
+            <div class="form-group">
+                <label for="video-description">Description</label>
+                <textarea id="video-description" placeholder="Tell viewers about your short"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="video-thumbnail">Thumbnail</label>
+                <input type="file" id="video-thumbnail" accept="image/*">
+                <div class="thumbnail-preview" id="thumbnail-preview"></div>
+            </div>
+            <button id="publish-btn">Publish Short</button>
+        </div>
+        
+        <div class="upload-progress" id="upload-progress" style="display: none;">
+            <h2>Uploading...</h2>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <p id="progress-text">0%</p>
+        </div>
+        
+        <div class="upload-success" id="upload-success" style="display: none;">
+            <i class="fas fa-check-circle"></i>
+            <h2>Your short has been published!</h2>
+            <p>It's now available for viewers to watch.</p>
+            <div class="success-buttons">
+                <a href="dashboard.html" class="view-dashboard-btn">View Dashboard</a>
+                <a href="#" id="view-short-btn">View Short</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
+    
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/editor.js"></script>
+</body>
+</html>

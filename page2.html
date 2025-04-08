@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Series Detail</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* All your existing CSS styles from page2.css */
+        body,html{
+            margin: 0;
+            padding: 0;
+            outline: 0;
+            font-size: 62.5%;
+            font-family: Arial, Helvetica, sans-serif;
+            box-sizing: border-box;
+            background-color: #070d0e;
+        }
+        #app-container{
+            box-sizing: border-box;
+            position: relative;
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        #nav-bar{
+            position: absolute;
+            box-sizing: border-box;
+            width: 100%;
+            height: 7.2rem;
+            background: #1A2224;
+            padding-left: 6rem;
+            padding-right: 6rem;
+            display: flex;
+            flex-direction: row;
+            position: sticky;
+            z-index: 2;
+            top: 0;
+        }
+        #logo{
+            box-sizing: border-box;
+            height: 100%;
+            width: 15.7rem;
+            display: flex;
+            align-items: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            margin-right: 4.4rem;
+        }
+        #nav-options{
+            height: 100%;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+        #nav-options a{
+            width: 7.5rem;
+            margin-left: .9rem;
+            margin-right: .1rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .two{
+            color: white;
+        }
+        .two:hover{
+            color: #DE146D;
+        }
+        .web-maincontent{
+            box-sizing: border-box;
+        }
+        .title-page{
+            display: flex;
+            flex-direction: column;
+        }
+        .description-card-container{
+            position: relative;
+            width: 100%;
+           box-sizing: border-box;
+           display: flex;
+           flex-direction: row;
+           padding: 36px 60px 0;
+        }
+        .background-hero-image{
+            position: absolute;
+            top: 0;
+            left: 0;
+            align-items: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            height: 100%;
+            width: 100%;
+            filter: blur(8px);
+        }
+        .hero-img{
+            width: 100%;
+            padding: 0;
+            height: inherit;
+        }
+        .overlay{
+            box-sizing: border-box;
+            display: flex;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            height: inherit;
+            backdrop-filter: blur(10px);
+            background: linear-gradient(0deg, rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+        }
+        .description-data{
+            position: relative;
+            z-index: 1;
+            width: 45%;
+            color: #fff;
+            margin-right: 3.6rem;
+        }
+        .title-container{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .title{
+            font-size: 2.6rem;
+            margin: 0;
+        }
+        .title-seprator{
+            font-size: 1.6rem;
+            color: #717A7B;
+            margin: 0px 8px;
+        }
+        .title span{
+            font-size: 1.8rem;
+        }
+        .rating-detail{
+            display: flex;
+            margin: 1.2rem 0rem;
+            font-size: 1.4rem;
+        }
+        .rating-detail p{
+            margin: 0;
+        }
+        .rating-detail p::after{
+            content: " •";
+            color: #717a7b;
+            display: inline-block;
+            padding: 0px .4rem;
+        }
+        .badge-container{
+            padding: .2rem .6rem;
+            background: #1a2224;
+        }
+        .button-container{
+            margin: 2rem 0rem;
+        }
+        .button-container button{
+            padding: 1.6rem 2rem;
+            background-image: linear-gradient(to left,#0079ff,#3c8cf0 100%);
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.5;
+            font-weight: 500;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 1.8rem;
+           color: inherit;
+           border: none;
+        }
+        .button-title{
+            padding: 0rem .6rem 0rem .4rem;
+            margin: 0;
+        }
+        .main-sypnosis{
+            display: block;
+            unicode-bidi: isolate;
+            word-wrap: break-word;
+            -webkit-box-orient: vertical;
+            overflow: scroll;
+            text-overflow: ellipsis;
+            color: #fff;
+            font-size: 1.5rem;
+            line-height: 1.46;
+            font-weight: 400;
+            position: relative;
+            max-height: 500px;
+            transition: max-height .8s ease-out;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .second-sypnosis{
+            display: flex;
+            flex-direction: column;
+           color: #ffffffb2; 
+            font-size: 1.3rem;
+            margin: 1.6rem 0rem;
+            word-wrap: break-word;
+            vertical-align: baseline;
+        }
+        .text-style1{
+            display: inline;
+            line-height: 1.46;
+            word-wrap: break-word;
+            margin: .2rem 0 0;
+        }
+        .description-card{
+            width: 55%;
+            position: relative;
+            z-index: 1;
+            margin-left: 3.6rem;
+            cursor: pointer;
+            background-size: contain;
+        }
+        .description-card img{
+            width: 100%;
+            border-radius: 1.6rem;
+            box-shadow: 0 0 45px 15px hsla(0, 0%, 78%, .1);
+        }
+        .description-play{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 6.4rem;
+            height: 6.4rem;
+            transition: transform .25s cubic-bezier(.33,.04,.63,.93) 0s;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .description-play img{
+            color: transparent;
+        }
+        .tab-container{
+            margin: 0 6rem;
+            padding: .8rem 0;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        .list-container{
+            margin: 0 6rem;
+            padding: 1.2rem 0;
+        }
+        .episode-item-container{
+            padding: 1.2rem 0;
+            display: flex;
+        }
+        .inner-content{
+           display: flex;
+        }
+        .thumbnail-card{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 14.1rem;
+            width: 25rem;
+            border-radius: .6rem;
+            object-fit: contain;
+        }
+        .thumbnail-card img{
+            display: flex;
+            width: 100%;
+        }
+        .play-icon{
+            position: absolute;
+            width: 3rem;
+        }
+        .episode-itemdetails{
+            margin-left: 0;
+            padding: 12px 80px 12px 28px;
+            width: calc(100% - 250px);
+            font-size: 16px;
+            line-height: 1.5;
+            font-weight: 400;
+            background-color: hsla(186, 4%, 46%, .1);
+        }
+        .episode-no-heading{
+            display: block;
+            color: #fff;
+            margin-bottom: 1.2rem;
+        }
+        .ep-sypnosis{
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            color: #717a7b;
+            margin: 0;
+            margin-bottom: 1.2rem;
+            word-wrap: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+        }
+        .date-details{
+            font-size: 1.4rem;
+            margin: 0;
+            color : #717a7b;
+            line-height:1
+        }
+        .title-seprator{
+            display: inline-block;
+            margin: 0;
+            margin: .6rem .6rem;
+        }
+        .video-container{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+        .og-video{
+            box-sizing: border-box;
+            position: relative;
+            display: block;
+            height: 100%;
+            width: 100%;
+            z-index: 2;
+            overflow-x: hidden;
+        }
+        .og-video video{
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .cross-container{
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+        .cross-button {
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            transition: transform .1s ease-in;
+        }
+        .cross-button:hover{
+            color: red;
+            transform: scale(1.3);
+        }
+        @media(max-width:998px) {
+            html{
+                font-size: 55%;
+            }
+        }
+        @media(max-width:768px) {
+            html{
+                font-size: 30%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">      
+        <div id="nav-bar">
+            <div id="logo">
+                <img src="download1.svg">
+            </div>
+            <div id="nav-options">
+                <a href="index.html" class="two"><span>Home</span></a>
+                <a href="#" class="two"><span>Web Series</span></a>
+                <a href="#" class="two"><span>Movies</span></a>
+                <a href="#" class="two"><span>Imported</span></a>
+                <a href="#" class="two"><span>Romance</span></a>
+                <a href="#" class="two"><span>Comedy</span></a>
+                <a href="#" class="two"><span>Tamil</span></a>
+                <a href="#" class="two"><span>Telugu</span></a>
+                <a href="watch/snips.html" class="two"><span>Snips</span></a>
+            </div>
+        </div>
+        <div class="web-maincontent app-container">
+            <div class="title-page">
+                <div>
+                    <div class="description-card-container">
+                        <div class="background-hero-image">
+                            <img id="hero-image" src="demo.jpg" class="hero-img">
+                            <div class="overlay"></div>
+                        </div>
+                        <div class="description-data">
+                            <div class="title-container">
+                                <h1 id="series-title" class="title season episode" style="color:white">
+                                    Loading...
+                                    <span class="title-seprator">|</span>
+                                    <span id="series-season">Season</span>
+                                    <span class="title-seprator">|</span>
+                                    <span id="series-episode">Episode</span>
+                                </h1>
+                            </div>
+                            <div class="rating-detail">
+                                <p id="episode-title">Loading...</p>
+                                <p id="series-creator">Loading...</p>
+                                <span class="badge-container">U/A 16+</span>
+                            </div>
+                            <div class="button-container">
+                                <button type="button" class="button-1" id="continue-watching">
+                                    <i class="fas fa-play" style="margin-right: 8px;"></i>
+                                    <p class="button-title">Continue Watching</p>
+                                </button>
+                            </div>
+                            <div class="sypnosis-container">
+                                <div class="sypnosis-ptext">
+                                    <div id="series-synopsis" class="main-sypnosis">
+                                        Loading...
+                                    </div>
+                                    <div class="second-sypnosis main sypnosis">
+                                        <p id="series-cast" class="text-style1">
+                                            Starring: Loading...
+                                        </p>
+                                        <p id="series-language" class="text-style1">Language: Loading...</p>
+                                        <p id="series-genre" class="text-style1">Genre: Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="disclaimer-row">
+                                <p class="disclaimer-text">Viewer discretion advised.</p>
+                                <span class="description-row">More</span>
+                            </div>
+                        </div>
+                        <div class="description-card" id="series-play-button">
+                            <img id="series-image" src="demo.jpg">
+                            <div class="description-play">
+                                <i class="fas fa-play" style="font-size: 3rem; color: white;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="tab-container">
+                        <div class="list-container" id="episodes-list">
+                            <!-- Episodes will be loaded here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-container" id="video-container">
+        <div class="og-video">
+            <video id="my-video" controls>
+                <source src="" type="video/mp4">
+            </video>
+            <div class="cross-container">
+                <div class="cross-button">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Series data (same as in index.html)
+        const seriesData = {
+            "sisterhood": {
+                title: "Sisterhood",
+                season: "Season 1",
+                creator: "TVF",
+                synopsis: "Nikita must pay a fine but doesn't have the money for it and plans to steal from the might box by crossing Gargi, the new entrant. Zoya must help Ann, the repeater to improve her grades this year.",
+                cast: "Starring: Nidhi Bhanushali, Bhagyashree Limaye, Anvesha Vij, Nitya Mathur, Saumya Uniyal",
+                language: "Language: Hindi",
+                genre: "Genre: Drama, Comedy",
+                image: "images/sample19.jpg",
+                episodes: [
+                    {
+                        number: "E1",
+                        title: "The First Day",
+                        synopsis: "Nikita must pay a fine but doesn't have the money for it and plans to steal from the might box by crossing Gargi, the new entrant. Zoya must help Ann, the repeater to improve her grades this year.",
+                        date: "Jun 13, 2024",
+                        duration: "25 min",
+                        videoUrl: "videos/sisterhood-ep1.mp4"
+                    },
+                    {
+                        number: "E2",
+                        title: "New Challenges",
+                        synopsis: "The girls face new challenges as they navigate through college life and friendships.",
+                        date: "Jun 20, 2024",
+                        duration: "24 min",
+                        videoUrl: "videos/sisterhood-ep2.mp4"
+                    }
+                ]
+            },
+            "scam-1992": {
+                title: "Scam 1992",
+                season: "Season 1",
+                creator: "Hansal Mehta",
+                synopsis: "The rise and fall of India's most infamous stockbroker, Harshad Mehta, who took the stock market to dizzying heights and his catastrophic downfall.",
+                cast: "Starring: Pratik Gandhi, Shreya Dhanwanthary, Hemant Kher",
+                language: "Language: Hindi",
+                genre: "Genre: Drama, Crime",
+                image: "images/sample18.jpg",
+                episodes: [
+                    {
+                        number: "E1",
+                        title: "The Big Bull",
+                        synopsis: "Harshad Mehta arrives in Mumbai with dreams of making it big in the stock market.",
+                        date: "Oct 9, 2020",
+                        duration: "54 min",
+                        videoUrl: "videos/scam1992-ep1.mp4"
+                    },
+                    {
+                        number: "E2",
+                        title: "The System",
+                        synopsis: "Harshad learns the ropes of the stock market and discovers loopholes in the system.",
+                        date: "Oct 9, 2020",
+                        duration: "52 min",
+                        videoUrl: "videos/scam1992-ep2.mp4"
+                    }
+                ]
+            },
+            // Add similar data for all other series
+        };
+
+        // DOM Elements
+        const vdo_container = document.querySelector(".video-container");
+        const app_container = document.querySelector("#app-container");
+        const continue_button = document.querySelector(".button-title");
+        const vdo_btn = document.querySelector(".description-card");
+        const cross_btn = document.querySelector(".cross-button");
+        const video = document.getElementById("my-video");
+
+        // Load series data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const seriesId = localStorage.getItem('selectedSeries') || 'sisterhood';
+            const series = seriesData[seriesId];
+            
+            if (series) {
+                // Update the hero image
+                document.getElementById('hero-image').src = series.image;
+                document.getElementById('series-image').src = series.image;
+                
+                // Update the title
+                document.getElementById('series-title').innerHTML = `
+                    ${series.title}
+                    <span class="title-seprator">|</span>
+                    <span>${series.season}</span>
+                `;
+                
+                // Update the creator
+                document.getElementById('series-creator').textContent = series.creator;
+                
+                // Update the synopsis
+                document.getElementById('series-synopsis').textContent = series.synopsis;
+                
+                // Update the cast, language, genre
+                document.getElementById('series-cast').textContent = series.cast;
+                document.getElementById('series-language').textContent = series.language;
+                document.getElementById('series-genre').textContent = series.genre;
+                
+                // Update first episode info
+                if (series.episodes.length > 0) {
+                    const firstEpisode = series.episodes[0];
+                    document.getElementById('episode-title').textContent = firstEpisode.title;
+                    
+                    // Update continue watching button
+                    document.querySelector('.button-title').textContent = `Continue Watching ${series.season} E1`;
+                }
+                
+                // Update episodes list
+                const episodesList = document.getElementById('episodes-list');
+                episodesList.innerHTML = '';
+                
+                series.episodes.forEach((episode, index) => {
+                    const episodeElement = document.createElement('div');
+                    episodeElement.innerHTML = `
+                        <div class="episode-item-container">
+                            <div class="inner-content">
+                                <a href="#" class="play-episode" data-index="${index}">
+                                    <div class="thumbnail-card">
+                                        <img src="${series.image}">
+                                        <span class="play-icon"><i class="fas fa-play"></i></span>
+                                    </div>
+                                </a>
+                                <div class="episode-itemdetails">
+                                    <div class="episode-no-heading">
+                                        ${episode.number} | ${episode.title}
+                                    </div>
+                                    <p class="ep-sypnosis">${episode.synopsis}</p>
+                                    <p class="date-details">
+                                        ${episode.date}
+                                        <span class="title-seprator">|</span>
+                                        <span class="duration">${episode.duration}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    episodesList.appendChild(episodeElement);
+                });
+                
+                // Set video source for the first episode
+                if (series.episodes.length > 0) {
+                    video.src = series.episodes[0].videoUrl;
+                }
+            }
+        });
+
+        // Video play function
+        function video_play(){
+            console.log("Playing video");
+            vdo_container.style.display = "block";
+            app_container.style.display = "none";
+            video.autoplay = true;
+            video.muted = true;
+            video.play().catch(e => console.log("Autoplay prevented:", e));
+        }
+
+        // Event listeners
+        vdo_btn.addEventListener("click", video_play);
+        document.getElementById('continue-watching').addEventListener("click", video_play);
+
+        cross_btn.addEventListener("click", () => {
+            console.log("Closing video");
+            vdo_container.style.display = "none";
+            app_container.style.display = "block";
+            video.pause();
+        });
+
+        // Add click handlers for episode play buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.play-episode') || e.target.closest('.thumbnail-card') || e.target.closest('.play-icon')) {
+                const seriesId = localStorage.getItem('selectedSeries') || 'sisterhood';
+                const series = seriesData[seriesId];
+                const episodeIndex = e.target.closest('.play-episode')?.getAttribute('data-index') || 0;
+                
+                if (series && series.episodes[episodeIndex]) {
+                    video.src = series.episodes[episodeIndex].videoUrl;
+                    video_play();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

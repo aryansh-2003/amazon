@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snips</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="snips.css">
+</head>
+<body>
+    <input type="file" id="uploadInput" accept="video/*" style="display: none;">
+<button id="uploadBtn">Upload Video</button>
+
+    <div class="app-container">
+       <div id="nav-bar">
+         <div id="logo">
+            <img src="MiniTV.png" alt=" Logo">
+         </div>
+         <div id="nav-options">
+            <a href="#" class="nav-link active"><span>Snips</span></a>
+            <a href="\index2.html" class="nav-link"><span>Home</span></a>
+            <a href="#" class="nav-link"><span>Subscriptions</span></a>
+            <a href="#" class="nav-link"><span>Library</span></a>
+           </div>
+       </div>
+       <div class="main-container">
+           <div class="outer-box">
+               <!-- Reel 1 -->
+               <div class="reel">
+                 <div class="snips-section">
+                   <div class="video-sec">
+                       <video autoplay muted loop playsinline>
+                           <source src="sample2.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                       </video>
+                   </div>
+                   <div class="description-sec">
+                       <div class="user-info">
+                           <div class="user-avatar">
+                               <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User Avatar">
+                           </div>
+                           <div class="user-details">
+                               <p class="username">@dancingqueen</p>
+                               <p class="follow">Follow</p>
+                           </div>
+                       </div>
+                       <p class="caption">Check out these moves! #dance #viral</p>
+                       <div class="sound-info">
+                           <i class="fas fa-music"></i>
+                           <p>Original Sound</p>
+                       </div>
+                   </div>
+                 </div>
+                 <div class="interaction-sec">
+                    <div class="interaction-box">
+                        <div class="profile-pic">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile">
+                        </div>
+                    </div>
+                    <div class="interaction-box like">
+                        <i class="fa-solid fa-heart"></i>
+                        <p class="count">22.2k</p>
+                    </div>
+                    <div class="interaction-box comment">
+                        <i class="fa-solid fa-comment"></i>
+                        <p class="count">1.2k</p>
+                    </div>
+                    <div class="interaction-box share">
+                        <i class="fa-solid fa-share"></i>
+                        <p class="count">Share</p>
+                    </div>
+                    <div class="interaction-box more">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                    <div class="music-cover">
+                        <img src="https://picsum.photos/50/50" alt="Music Cover">
+                    </div>
+                  </div>
+               </div>
+
+               <!-- Reel 2 -->
+               <div class="reel">
+                 <div class="snips-section">
+                   <div class="video-sec">
+                       <video autoplay muted loop playsinline>
+                           <source src="sample3.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                       </video>
+                   </div>
+                   <div class="description-sec">
+                       <div class="user-info">
+                           <div class="user-avatar">
+                               <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar">
+                           </div>
+                           <div class="user-details">
+                               <p class="username">@naturelover</p>
+                               <p class="follow">Follow</p>
+                           </div>
+                       </div>
+                       <p class="caption">Beautiful spring day #nature #flowers</p>
+                       <div class="sound-info">
+                           <i class="fas fa-music"></i>
+                           <p>Nature Sounds</p>
+                       </div>
+                   </div>
+                 </div>
+                 <div class="interaction-sec">
+                    <div class="interaction-box">
+                        <div class="profile-pic">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile">
+                        </div>
+                    </div>
+                    <div class="interaction-box like">
+                        <i class="fa-solid fa-heart"></i>
+                        <p class="count">15.7k</p>
+                    </div>
+                    <div class="interaction-box comment">
+                        <i class="fa-solid fa-comment"></i>
+                        <p class="count">856</p>
+                    </div>
+                    <div class="interaction-box share">
+                        <i class="fa-solid fa-share"></i>
+                        <p class="count">Share</p>
+                    </div>
+                    <div class="interaction-box more">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                    <div class="music-cover">
+                        <img src="https://picsum.photos/50/50" alt="Music Cover">
+                    </div>
+                  </div>
+               </div>
+
+               <!-- Reel 3 -->
+               <div class="reel">
+                 <div class="snips-section">
+                   <div class="video-sec">
+                       <video autoplay muted loop playsinline>
+                           <source src="sample4.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                       </video>
+                   </div>
+                   <div class="description-sec">
+                       <div class="user-info">
+                           <div class="user-avatar">
+                               <img src="https://randomuser.me/api/portraits/men/29.jpg" alt="User Avatar">
+                           </div>
+                           <div class="user-details">
+                               <p class="username">@skateboardpro</p>
+                               <p class="follow">Follow</p>
+                           </div>
+                       </div>
+                       <p class="caption">New tricks unlocked! #skateboard #extreme</p>
+                       <div class="sound-info">
+                           <i class="fas fa-music"></i>
+                           <p>Skateboard Sounds</p>
+                       </div>
+                   </div>
+                 </div>
+                 <div class="interaction-sec">
+                    <div class="interaction-box">
+                        <div class="profile-pic">
+                            <img src="https://randomuser.me/api/portraits/men/29.jpg" alt="Profile">
+                        </div>
+                    </div>
+                    <div class="interaction-box like">
+                        <i class="fa-solid fa-heart"></i>
+                        <p class="count">32.1</p>
+                    </div>
+                    <div class="interaction-box comment">
+                        <i class="fa-solid fa-comment"></i>
+                        <p class="count">2.4</p>
+                    </div>
+                    <div class="interaction-box share">
+                        <i class="fa-solid fa-share"></i>
+                        <p class="count">Share</p>
+                    </div>
+                    <div class="interaction-box more">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                    <div class="music-cover">
+                        <img src="https://picsum.photos/50/50" alt="Music Cover">
+                    </div>
+                  </div>
+               </div>
+               <div class="reel">
+                <div class="snips-section">
+                  <div class="video-sec">
+                      <video autoplay muted loop playsinline>
+                          <source src="sample8.mp4" type="video/mp4">
+                          Your browser does not support the video tag.
+                      </video>
+                  </div>
+                  <div class="description-sec">
+                      <div class="user-info">
+                          <div class="user-avatar">
+                              <img src="https://randomuser.me/api/portraits/men/39.jpg" alt="User Avatar">
+                          </div>
+                          <div class="user-details">
+                              <p class="username">@skateboardpro</p>
+                              <p class="follow">Follow</p>
+                          </div>
+                      </div>
+                      <p class="caption">New tricks unlocked! #skateboard #extreme</p>
+                      <div class="sound-info">
+                          <i class="fas fa-music"></i>
+                          <p>Skateboard Sounds</p>
+                      </div>
+                  </div>
+                </div>
+                <div class="interaction-sec">
+                   <div class="interaction-box">
+                       <div class="profile-pic">
+                           <img src="https://randomuser.me/api/portraits/men/39.jpg" alt="Profile">
+                       </div>
+                   </div>
+                   <div class="interaction-box like">
+                       <i class="fa-solid fa-heart"></i>
+                       <p class="count">32.1</p>
+                   </div>
+                   <div class="interaction-box comment">
+                       <i class="fa-solid fa-comment"></i>
+                       <p class="count">2.4</p>
+                   </div>
+                   <div class="interaction-box share">
+                       <i class="fa-solid fa-share"></i>
+                       <p class="count">Share</p>
+                   </div>
+                   <div class="interaction-box more">
+                       <i class="fa-solid fa-ellipsis-vertical"></i>
+                   </div>
+                   <div class="music-cover">
+                       <img src="https://picsum.photos/50/50" alt="Music Cover">
+                   </div>
+                 </div>
+              </div>
+              <div class="reel">
+                <div class="snips-section">
+                  <div class="video-sec">
+                      <video autoplay muted loop playsinline>
+                          <source src="sample7.mp4" type="video/mp4">
+                          Your browser does not support the video tag.
+                      </video>
+                  </div>
+                  <div class="description-sec">
+                      <div class="user-info">
+                          <div class="user-avatar">
+                              <img src="https://randomuser.me/api/portraits/men/40.jpg" alt="User Avatar">
+                          </div>
+                          <div class="user-details">
+                              <p class="username">@skateboardpro</p>
+                              <p class="follow">Follow</p>
+                          </div>
+                      </div>
+                      <p class="caption">New tricks unlocked! #skateboard #extreme</p>
+                      <div class="sound-info">
+                          <i class="fas fa-music"></i>
+                          <p>Skateboard Sounds</p>
+                      </div>
+                  </div>
+                </div>
+                <div class="interaction-sec">
+                   <div class="interaction-box">
+                       <div class="profile-pic">
+                           <img src="https://randomuser.me/api/portraits/men/40.jpg" alt="Profile">
+                       </div>
+                   </div>
+                   <div class="interaction-box like">
+                       <i class="fa-solid fa-heart"></i>
+                       <p class="count">32.1</p>
+                   </div>
+                   <div class="interaction-box comment">
+                       <i class="fa-solid fa-comment"></i>
+                       <p class="count">2.4</p>
+                   </div>
+                   <div class="interaction-box share">
+                       <i class="fa-solid fa-share"></i>
+                       <p class="count">Share</p>
+                   </div>
+                   <div class="interaction-box more">
+                       <i class="fa-solid fa-ellipsis-vertical"></i>
+                   </div>
+                   <div class="music-cover">
+                       <img src="https://picsum.photos/50/50" alt="Music Cover">
+                   </div>
+                 </div>
+              </div>
+              <div class="reel">
+                <div class="snips-section">
+                  <div class="video-sec">
+                      <video autoplay muted loop playsinline>
+                          <source src="sample10.mp4" type="video/mp4">
+                          Your browser does not support the video tag.
+                      </video>
+                  </div>
+                  <div class="description-sec">
+                      <div class="user-info">
+                          <div class="user-avatar">
+                              <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="User Avatar">
+                          </div>
+                          <div class="user-details">
+                              <p class="username">@skateboardpro</p>
+                              <p class="follow">Follow</p>
+                          </div>
+                      </div>
+                      <p class="caption">New tricks unlocked! #skateboard #extreme</p>
+                      <div class="sound-info">
+                          <i class="fas fa-music"></i>
+                          <p>Skateboard Sounds</p>
+                      </div>
+                  </div>
+                </div>
+                <div class="interaction-sec">
+                   <div class="interaction-box">
+                       <div class="profile-pic">
+                           <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Profile">
+                       </div>
+                   </div>
+                   <div class="interaction-box like">
+                       <i class="fa-solid fa-heart"></i>
+                       <p class="count">32.1</p>
+                   </div>
+                   <div class="interaction-box comment">
+                       <i class="fa-solid fa-comment"></i>
+                       <p class="count">2.4</p>
+                   </div>
+                   <div class="interaction-box share">
+                       <i class="fa-solid fa-share"></i>
+                       <p class="count">Share</p>
+                   </div>
+                   <div class="interaction-box more">
+                       <i class="fa-solid fa-ellipsis-vertical"></i>
+                   </div>
+                   <div class="music-cover">
+                       <img src="https://picsum.photos/50/50" alt="Music Cover">
+                   </div>
+                 </div>
+              </div>
+              <div class="reel">
+                <div class="snips-section">
+                  <div class="video-sec">
+                      <video autoplay muted loop playsinline>
+                          <source src="sample4.mp4" type="video/mp4">
+                          Your browser does not support the video tag.
+                      </video>
+                  </div>
+                  <div class="description-sec">
+                      <div class="user-info">
+                          <div class="user-avatar">
+                              <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="User Avatar">
+                          </div>
+                          <div class="user-details">
+                              <p class="username">@skateboardpro</p>
+                              <p class="follow">Follow</p>
+                          </div>
+                      </div>
+                      <p class="caption">New tricks unlocked! #skateboard #extreme</p>
+                      <div class="sound-info">
+                          <i class="fas fa-music"></i>
+                          <p>Skateboard Sounds</p>
+                      </div>
+                  </div>
+                </div>
+                <div class="interaction-sec">
+                   <div class="interaction-box">
+                       <div class="profile-pic">
+                           <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Profile">
+                       </div>
+                   </div>
+                   <div class="interaction-box like">
+                       <i class="fa-solid fa-heart"></i>
+                       <p class="count">32.1</p>
+                   </div>
+                   <div class="interaction-box comment">
+                       <i class="fa-solid fa-comment"></i>
+                       <p class="count">2.4</p>
+                   </div>
+                   <div class="interaction-box share">
+                       <i class="fa-solid fa-share"></i>
+                       <p class="count">Share</p>
+                   </div>
+                   <div class="interaction-box more">
+                       <i class="fa-solid fa-ellipsis-vertical"></i>
+                   </div>
+                   <div class="music-cover">
+                       <img src="https://picsum.photos/50/50" alt="Music Cover">
+                   </div>
+                 </div>
+              </div>
+              <div class="reel">
+                <div class="snips-section">
+                  <div class="video-sec">
+                      <video autoplay muted loop playsinline>
+                          <source src="sample4.mp4" type="video/mp4">
+                          Your browser does not support the video tag.
+                      </video>
+                  </div>
+                  <div class="description-sec">
+                      <div class="user-info">
+                          <div class="user-avatar">
+                              <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="User Avatar">
+                          </div>
+                          <div class="user-details">
+                              <p class="username">@skateboardpro</p>
+                              <p class="follow">Follow</p>
+                          </div>
+                      </div>
+                      <p class="caption">New tricks unlocked! #skateboard #extreme</p>
+                      <div class="sound-info">
+                          <i class="fas fa-music"></i>
+                          <p>Skateboard Sounds</p>
+                      </div>
+                  </div>
+                </div>
+                <div class="interaction-sec">
+                   <div class="interaction-box">
+                       <div class="profile-pic">
+                           <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Profile">
+                       </div>
+                   </div>
+                   <div class="interaction-box like">
+                       <i class="fa-solid fa-heart"></i>
+                       <p class="count">32.1</p>
+                   </div>
+                   <div class="interaction-box comment">
+                       <i class="fa-solid fa-comment"></i>
+                       <p class="count">2.4</p>
+                   </div>
+                   <div class="interaction-box share">
+                       <i class="fa-solid fa-share"></i>
+                       <p class="count">Share</p>
+                   </div>
+                   <div class="interaction-box more">
+                       <i class="fa-solid fa-ellipsis-vertical"></i>
+                   </div>
+                   <div class="music-cover">
+                       <img src="https://picsum.photos/50/50" alt="Music Cover">
+                   </div>
+                 </div>
+              </div>
+              <div class="reel">
+                <div class="snips-section">
+                  <div class="video-sec">
+                      <video autoplay muted loop playsinline>
+                          <source src="sample5.mp4" type="video/mp4">
+                          Your browser does not support the video tag.
+                      </video>
+                  </div>
+                  <div class="description-sec">
+                      <div class="user-info">
+                          <div class="user-avatar">
+                              <img src="https://randomuser.me/api/portraits/men/47.jpg" alt="User Avatar">
+                          </div>
+                          <div class="user-details">
+                              <p class="username">@skateboardpro</p>
+                              <p class="follow">Follow</p>
+                          </div>
+                      </div>
+                      <p class="caption">New tricks unlocked! #skateboard #extreme</p>
+                      <div class="sound-info">
+                          <i class="fas fa-music"></i>
+                          <p>Skateboard Sounds</p>
+                      </div>
+                  </div>
+                </div>
+                <div class="interaction-sec">
+                   <div class="interaction-box">
+                       <div class="profile-pic">
+                           <img src="https://randomuser.me/api/portraits/men/47.jpg" alt="Profile">
+                       </div>
+                   </div>
+                   <div class="interaction-box like">
+                       <i class="fa-solid fa-heart"></i>
+                       <p class="count">32.1</p>
+                   </div>
+                   <div class="interaction-box comment">
+                       <i class="fa-solid fa-comment"></i>
+                       <p class="count">2.4</p>
+                   </div>
+                   <div class="interaction-box share">
+                       <i class="fa-solid fa-share"></i>
+                       <p class="count">Share</p>
+                   </div>
+                   <div class="interaction-box more">
+                       <i class="fa-solid fa-ellipsis-vertical"></i>
+                   </div>
+                   <div class="music-cover">
+                       <img src="https://picsum.photos/50/50" alt="Music Cover">
+                   </div>
+                 </div>
+              </div>
+              <div class="reel">
+                <div class="snips-section">
+                  <div class="video-sec">
+                      <video autoplay muted loop playsinline>
+                          <source src="sample5.mp4" type="video/mp4">
+                          Your browser does not support the video tag.
+                      </video>
+                  </div>
+                  <div class="description-sec">
+                      <div class="user-info">
+                          <div class="user-avatar">
+                              <img src="https://randomuser.me/api/portraits/men/48.jpg" alt="User Avatar">
+                          </div>
+                          <div class="user-details">
+                              <p class="username">@skateboardpro</p>
+                              <p class="follow">Follow</p>
+                          </div>
+                      </div>
+                      <p class="caption">New tricks unlocked! #skateboard #extreme</p>
+                      <div class="sound-info">
+                          <i class="fas fa-music"></i>
+                          <p>Skateboard Sounds</p>
+                      </div>
+                  </div>
+                </div>
+                <div class="interaction-sec">
+                   <div class="interaction-box">
+                       <div class="profile-pic">
+                           <img src="https://randomuser.me/api/portraits/men/48.jpg" alt="Profile">
+                       </div>
+                   </div>
+                   <div class="interaction-box like">
+                       <i class="fa-solid fa-heart"></i>
+                       <p class="count">32.1</p>
+                   </div>
+                   <div class="interaction-box comment">
+                       <i class="fa-solid fa-comment"></i>
+                       <p class="count">2.4</p>
+                   </div>
+                   <div class="interaction-box share">
+                       <i class="fa-solid fa-share"></i>
+                       <p class="count">Share</p>
+                   </div>
+                   <div class="interaction-box more">
+                       <i class="fa-solid fa-ellipsis-vertical"></i>
+                   </div>
+                   <div class="music-cover">
+                       <img src="https://picsum.photos/50/50" alt="Music Cover">
+                   </div>
+                 </div>
+              </div>
+            </div>
+         </div>
+      </div>
+
+    <!-- Comment Modal -->
+    <div class="modal" id="commentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Comments</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="comment-list">
+                    <!-- Comments will be added here dynamically -->
+                </div>
+                <div class="add-comment">
+                    <input type="text" placeholder="Add a comment...">
+                    <button class="post-comment">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="modal" id="shareModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Share</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="share-options">
+                    <div class="share-option">
+                        <i class="fab fa-whatsapp"></i>
+                        <p>WhatsApp</p>
+                    </div>
+                    <div class="share-option">
+                        <i class="fab fa-facebook"></i>
+                        <p>Facebook</p>
+                    </div>
+                    <div class="share-option">
+                        <i class="fab fa-twitter"></i>
+                        <p>Twitter</p>
+                    </div>
+                    <div class="share-option">
+                        <i class="fas fa-link"></i>
+                        <p>Copy Link</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script3.js"></script>
+</body>
+</html>

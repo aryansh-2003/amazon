@@ -1,0 +1,347 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+#nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #000;
+    z-index: 100;
+    border-bottom: 1px solid #333;
+}
+
+#logo img {
+    height: 30px;
+}
+
+#nav-options {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 5px 0;
+}
+
+#nav-options::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.nav-link:hover, .nav-link.active {
+    background-color: #333;
+}
+
+.app-container {
+    margin-top: 60px;
+    height: calc(100vh - 60px);
+}
+
+.main-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.outer-box {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+.outer-box::-webkit-scrollbar {
+    display: none;
+}
+
+.reel {
+    width: 100%;
+    height: 100vh;
+    scroll-snap-align: start;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+}
+
+.snips-section {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    position: relative;
+}
+
+.video-sec {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-sec video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #000;
+}
+
+.description-sec {
+    position: absolute;
+    bottom: 100px;
+    left: 10px;
+    color: white;
+    max-width: 80%;
+    padding: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.follow {
+    font-size: 12px;
+    color: #fff;
+    background-color: #ff0000;
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.caption {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.sound-info {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.sound-info i {
+    margin-right: 5px;
+}
+
+.interaction-sec {
+    position: absolute;
+    right: 10px;
+    bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.interaction-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.interaction-box i {
+    font-size: 24px;
+    margin-bottom: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.count {
+    font-size: 12px;
+}
+
+.like i {
+    color: #fff;
+}
+
+.like.active i {
+    color: #ff0000;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.music-cover {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.music-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #222;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-modal {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.comment-list {
+    margin-bottom: 20px;
+}
+
+.comment-item {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.comment-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.comment-text {
+    flex: 1;
+}
+
+.comment-user {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.add-comment {
+    display: flex;
+    margin-top: 20px;
+}
+
+.add-comment input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    margin-right: 10px;
+}
+
+.post-comment {
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.share-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.share-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.share-option i {
+    font-size: 30px;
+    margin-bottom: 10px;
+}

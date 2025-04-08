@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Episode</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        .upload-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .upload-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .upload-header h1 {
+            color: #232f3e;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .upload-btn {
+            background: #ff9900;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .video-preview {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="upload-series.html"><i class="fas fa-film"></i> Upload Series</a>
+                <a href="upload-episode.html" class="active"><i class="fas fa-video"></i> Upload Episode</a>
+                <a href="upload-short.html"><i class="fas fa-photo-video"></i> Upload Snip</a>
+                <a href="manage-content.html"><i class="fas fa-edit"></i> Manage Content</a>
+                <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                <a href="\index.html" id="admin-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </nav>
+        </aside>
+        
+        <main class="admin-main">
+            <div class="upload-container">
+                <div class="upload-header">
+                    <h1>Upload New Episode</h1>
+                </div>
+                
+                <form id="episode-upload-form">
+                    <div class="form-group">
+                        <label for="series-select">Select Series</label>
+                        <select id="series-select" required>
+                            <option value="">Loading series...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="episode-title">Episode Title</label>
+                        <input type="text" id="episode-title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="episode-number">Episode Number</label>
+                        <input type="number" id="episode-number" min="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="episode-description">Description</label>
+                        <textarea id="episode-description" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="episode-video">Video File</label>
+                        <input type="file" id="episode-video" accept="video/*" required>
+                        <video id="video-preview" class="video-preview" controls></video>
+                    </div>
+                    
+                    <button type="submit" class="upload-btn">Save Episode Locally</button>
+                    <p id="upload-status"></p>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/firebase-config.js"></script>
+    <script>
+        // Load series for dropdown
+        function loadSeries() {
+            const seriesList = JSON.parse(localStorage.getItem('localSeries')) || [];
+            const select = document.getElementById('series-select');
+            
+            select.innerHTML = '<option value="">Select a series</option>';
+            seriesList.forEach((series, index) => {
+                select.innerHTML += `<option value="${index}">${series.title}</option>`;
+            });
+        }
+        
+        // Video preview
+        document.getElementById('episode-video').addEventListener('change', function(e) {
+            const preview = document.getElementById('video-preview');
+            if (this.files && this.files[0]) {
+                preview.src = URL.createObjectURL(this.files[0]);
+                preview.style.display = 'block';
+            }
+        });
+        
+        // Form submission
+        document.getElementById('episode-upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const seriesIndex = document.getElementById('series-select').value;
+            const videoFile = document.getElementById('episode-video').files[0];
+            
+            if (seriesIndex === "") {
+                document.getElementById('upload-status').textContent = 'Please select a series';
+                return;
+            }
+            
+            const episodeData = {
+                seriesIndex: seriesIndex,
+                title: document.getElementById('episode-title').value,
+                episodeNumber: document.getElementById('episode-number').value,
+                description: document.getElementById('episode-description').value,
+                video: videoFile.name,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Save video locally
+            saveFileLocally('episodes', videoFile);
+            
+            // Save episode data to local storage
+            saveEpisodeData(episodeData);
+            
+            document.getElementById('upload-status').textContent = 'Episode saved locally!';
+            document.getElementById('episode-upload-form').reset();
+            document.getElementById('video-preview').style.display = 'none';
+        });
+        
+        function saveFileLocally(folder, file) {
+            console.log(`Saving ${file.name} to local ${folder} folder`);
+            
+            // For demo purposes, we'll store references in localStorage
+            const files = JSON.parse(localStorage.getItem('localFiles') || {});
+            if (!files[folder]) files[folder] = [];
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                files[folder].push({
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    lastModified: file.lastModified,
+                    data: e.target.result.split(',')[1] // Base64 data
+                });
+                
+                localStorage.setItem('localFiles', JSON.stringify(files));
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function saveEpisodeData(episode) {
+            const episodeList = JSON.parse(localStorage.getItem('localEpisodes') || []);
+            episodeList.push(episode);
+            localStorage.setItem('localEpisodes', JSON.stringify(episodeList));
+        }
+        
+        // Initialize
+        loadSeries();
+    </script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Amazon Mini TV Clone</title>
+    <link rel="stylesheet" href="../css/user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="user-navbar">
+        <div class="logo">
+            <img src="../images/amazon-mini-logo.jpg" alt="Amazon Mini TV">
+        </div>
+        <div class="user-nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="upload-short.html">Upload Short</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="profile.html" class="active">Profile</a>
+        </div>
+        <div class="user-auth-buttons">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img src="../images/default-avatar.jpg" alt="Profile Picture" id="profile-picture">
+                <button id="change-avatar-btn">Change</button>
+                <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+            </div>
+            <div class="profile-info">
+                <h1 id="profile-name">Loading...</h1>
+                <p id="profile-email">Loading...</p>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span id="shorts-count">0</span>
+                        <span>Shorts</span>
+                    </div>
+                    <div class="stat-item">
+                        <span id="views-count">0</span>
+                        <span>Views</span>
+                    </div>
+                    <div class="stat-item">
+                        <span id="likes-count">0</span>
+                        <span>Likes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-content">
+            <div class="profile-actions">
+                <h2>Account Settings</h2>
+                <div class="settings-form">
+                    <div class="form-group">
+                        <label for="display-name">Display Name</label>
+                        <input type="text" id="display-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-bio">Bio</label>
+                        <textarea id="profile-bio" placeholder="Tell viewers about yourself"></textarea>
+                    </div>
+                    <button id="save-profile-btn">Save Changes</button>
+                </div>
+            </div>
+            
+            <div class="profile-shorts">
+                <h2>Your Shorts</h2>
+                <div class="shorts-grid" id="user-shorts">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
+    
+    <script src="../js/auth.js"></script>
+    
+    <script>
+        // DOM Elements
+        const profileName = document.getElementById('profile-name');
+        const profileEmail = document.getElementById('profile-email');
+        const profilePicture = document.getElementById('profile-picture');
+        const changeAvatarBtn = document.getElementById('change-avatar-btn');
+        const avatarInput = document.getElementById('avatar-input');
+        const displayNameInput = document.getElementById('display-name');
+        const profileBio = document.getElementById('profile-bio');
+        const saveProfileBtn = document.getElementById('save-profile-btn');
+        const shortsCount = document.getElementById('shorts-count');
+        const viewsCount = document.getElementById('views-count');
+        const likesCount = document.getElementById('likes-count');
+        const userShortsContainer = document.getElementById('user-shorts');
+        
+        // Load profile data
+        function loadProfileData() {
+            const user = auth.currentUser;
+            if (user) {
+                // Display basic info
+                profileName.textContent = user.displayName || 'User';
+                profileEmail.textContent = user.email;
+                displayNameInput.value = user.displayName || '';
+                
+                // Load profile picture if available
+                if (user.photoURL) {
+                    profilePicture.src = user.photoURL;
+                }
+                
+                // Load user stats
+                loadUserStats(user.uid);
+                
+                // Load user shorts
+                loadUserShorts(user.uid);
+            }
+        }
+        
+        // Load user stats
+        function loadUserStats(userId) {
+            // Count user shorts
+            db.collection('shorts').where('creatorId', '==', userId).get()
+                .then(querySnapshot => {
+                    shortsCount.textContent = querySnapshot.size;
+                    
+                    // Calculate total views and likes
+                    let totalViews = 0;
+                    let totalLikes = 0;
+                    
+                    querySnapshot.forEach(doc => {
+                        const short = doc.data();
+                        totalViews += short.views || 0;
+                        totalLikes += short.likes || 0;
+                    });
+                    
+                    viewsCount.textContent = totalViews;
+                    likesCount.textContent = totalLikes;
+                });
+        }
+        
+        // Load user shorts
+        function loadUserShorts(userId) {
+            db.collection('shorts').where('creatorId', '==', userId)
+                .orderBy('timestamp', 'desc').get()
+                .then(querySnapshot => {
+                    userShortsContainer.innerHTML = '';
+                    
+                    querySnapshot.forEach(doc => {
+                        const short = doc.data();
+                        userShortsContainer.innerHTML += `
+                            <div class="short-card" onclick="location.href='../watch/shorts.html?id=${doc.id}'">
+                                <img src="${short.thumbnail}" alt="${short.title}">
+                                <div class="short-info">
+                                    <h3>${short.title}</h3>
+                                    <p>${short.views} views • ${short.likes} likes</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                });
+        }
+        
+        // Change avatar
+        changeAvatarBtn.addEventListener('click', () => {
+            avatarInput.click();
+        });
+        
+        avatarInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                const file = e.target.files[0];
+                const user = auth.currentUser;
+                const storageRef = storage.ref();
+                const avatarRef = storageRef.child(`avatars/${user.uid}/${file.name}`);
+                
+                // Upload new avatar
+                avatarRef.put(file).then(snapshot => {
+                    return snapshot.ref.getDownloadURL();
+                }).then(url => {
+                    // Update user profile
+                    return user.updateProfile({
+                        photoURL: url
+                    });
+                }).then(() => {
+                    // Update displayed avatar
+                    profilePicture.src = user.photoURL;
+                }).catch(error => {
+                    console.error("Error updating avatar:", error);
+                });
+            }
+        });
+        
+        // Save profile changes
+        saveProfileBtn.addEventListener('click', () => {
+            const user = auth.currentUser;
+            const newDisplayName = displayNameInput.value.trim();
+            const newBio = profileBio.value.trim();
+            
+            // Update display name if changed
+            if (newDisplayName !== user.displayName) {
+                user.updateProfile({
+                    displayName: newDisplayName
+                }).then(() => {
+                    profileName.textContent = newDisplayName;
+                    alert('Profile updated successfully');
+                }).catch(error => {
+                    console.error("Error updating profile:", error);
+                });
+            }
+            
+            // TODO: Save bio to Firestore if needed
+        });
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProfileData();
+        });
+    </script>
+</body>
+</html>

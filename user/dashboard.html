@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Amazon Mini TV Clone</title>
+    <link rel="stylesheet" href="../css/user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="user-navbar">
+        <div class="logo">
+            <img src="../images/amazon-mini-logo.jpg" alt="Amazon Mini TV">
+        </div>
+        <div class="user-nav-links">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="upload-short.html">Upload Short</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="profile.html">Profile</a>
+        </div>
+        <div class="user-auth-buttons">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <h1>Creator Dashboard</h1>
+        
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="total-views">0</h3>
+                    <p>Total Views</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="total-likes">0</h3>
+                    <p>Total Likes</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-share"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="total-shares">0</h3>
+                    <p>Total Shares</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="total-shorts">0</h3>
+                    <p>Your Shorts</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-content">
+            <div class="recent-shorts">
+                <h2>Your Recent Shorts</h2>
+                <div class="shorts-grid" id="recent-shorts">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="performance-chart">
+                <h2>Performance Overview</h2>
+                <canvas id="performance-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script src="../js/auth.js"></script>
+    
+    <script>
+        // Load dashboard data
+        function loadDashboardData() {
+            const user = auth.currentUser;
+            if (user) {
+                // Load user shorts
+                db.collection('shorts').where('creatorId', '==', user.uid)
+                    .orderBy('timestamp', 'desc').limit(4).get()
+                    .then(querySnapshot => {
+                        const recentShortsContainer = document.getElementById('recent-shorts');
+                        recentShortsContainer.innerHTML = '';
+                        
+                        let totalViews = 0;
+                        let totalLikes = 0;
+                        
+                        querySnapshot.forEach(doc => {
+                            const short = doc.data();
+                            recentShortsContainer.innerHTML += `
+                                <div class="short-card" onclick="location.href='../watch/shorts.html?id=${doc.id}'">
+                                    <img src="${short.thumbnail}" alt="${short.title}">
+                                    <div class="short-info">
+                                        <h3>${short.title}</h3>
+                                        <p>${short.views} views • ${short.likes} likes</p>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            totalViews += short.views || 0;
+                            totalLikes += short.likes || 0;
+                        });
+                        
+                        // Update stats
+                        document.getElementById('total-views').textContent = totalViews;
+                        document.getElementById('total-likes').textContent = totalLikes;
+                        document.getElementById('total-shorts').textContent = querySnapshot.size;
+                        
+                        // TODO: Load shares count if tracking shares
+                    });
+                
+                // Initialize performance chart
+                initPerformanceChart(user.uid);
+            }
+        }
+        
+        // Initialize performance chart
+        function initPerformanceChart(userId) {
+            // In a real app, you would fetch actual data from Firestore
+            // This is just a placeholder with sample data
+            const ctx = document.getElementById('performance-chart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        {
+                            label: 'Views',
+                            data: [120, 190, 300, 500, 200, 300],
+                            borderColor: '#00a8e1',
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Likes',
+                            data: [50, 100, 150, 200, 180, 250],
+                            borderColor: '#ff4d4d',
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboardData();
+        });
+    </script>
+</body>
+</html>

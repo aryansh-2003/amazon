@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Mini TV Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Amazon Ember', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #0f171e;
+            color: #ffffff;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #0f171e;
+            border-bottom: 1px solid #1a242f;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo img {
+            height: 30px;
+        }
+        
+        .search-bar {
+            display: flex;
+            width: 40%;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            background-color: #1a242f;
+            color: white;
+        }
+        
+        .search-bar button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            background-color: #1a242f;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: #1a242f;
+        }
+        
+        .nav-links a.active {
+            background-color: #00a8e1;
+            color: #0f171e;
+            font-weight: 500;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .welcome-message {
+            color: white;
+            margin-right: 10px;
+        }
+        
+        .login-btn, .register-btn, .logout-btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .login-btn {
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            background-color: transparent;
+        }
+        
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .register-btn {
+            background-color: #00a8e1;
+            color: #0f171e;
+        }
+        
+        .register-btn:hover {
+            background-color: #0088b9;
+        }
+        
+        .logout-btn {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+        
+        /* Content Sections */
+        .genre-section {
+            padding: 20px 5%;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        
+        .see-all {
+            color: #00a8e1;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .content-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 10px 0;
+            scrollbar-width: none;
+        }
+        
+        .content-carousel::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .content-card {
+            min-width: 150px;
+            background-color: #1a242f;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+            flex: 0 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .content-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-info {
+            padding: 10px;
+        }
+        
+        .card-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .card-meta {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        /* Categories Section */
+        .categories-section {
+            padding: 20px 5%;
+            background-color: #1a242f;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+        }
+        
+        .category-card {
+            background-color: #0f171e;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-card:hover {
+            background-color: #00a8e1;
+            color: #0f171e;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Web Series Detail Page Styles */
+        .series-detail-page {
+            display: none;
+            padding: 20px 5%;
+        }
+        
+        .description-card-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            padding: 36px 60px 0;
+        }
+        
+        .background-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            filter: blur(8px);
+        }
+        
+        .hero-img {
+            width: 100%;
+            height: inherit;
+        }
+        
+        .overlay {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            height: inherit;
+            backdrop-filter: blur(10px);
+            background: linear-gradient(0deg, rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+        }
+        
+        .description-data {
+            position: relative;
+            z-index: 1;
+            width: 45%;
+            color: #fff;
+            margin-right: 3.6rem;
+        }
+        
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .title {
+            font-size: 2.6rem;
+            margin: 0;
+        }
+        
+        .title-seprator {
+            font-size: 1.6rem;
+            color: #717A7B;
+            margin: 0px 8px;
+        }
+        
+        .title span {
+            font-size: 1.8rem;
+        }
+        
+        .rating-detail {
+            display: flex;
+            margin: 1.2rem 0rem;
+            font-size: 1.4rem;
+        }
+        
+        .rating-detail p {
+            margin: 0;
+        }
+        
+        .rating-detail p::after {
+            content: " •";
+            color: #717a7b;
+            display: inline-block;
+            padding: 0px .4rem;
+        }
+        
+        .badge-container {
+            padding: .2rem .6rem;
+            background: #1a2224;
+        }
+        
+        .button-container {
+            margin: 2rem 0rem;
+        }
+        
+        .button-container button {
+            padding: 1.6rem 2rem;
+            background-image: linear-gradient(to left,#0079ff,#3c8cf0 100%);
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.5;
+            font-weight: 500;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: inherit;
+            border: none;
+        }
+        
+        .button-title {
+            padding: 0rem .6rem 0rem .4rem;
+            margin: 0;
+        }
+        
+        .main-sypnosis {
+            display: block;
+            word-wrap: break-word;
+            overflow: scroll;
+            text-overflow: ellipsis;
+            color: #fff;
+            font-size: 1.5rem;
+            line-height: 1.46;
+            font-weight: 400;
+            position: relative;
+            max-height: 500px;
+            transition: max-height .8s ease-out;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .second-sypnosis {
+            display: flex;
+            flex-direction: column;
+            color: #ffffffb2; 
+            font-size: 1.3rem;
+            margin: 1.6rem 0rem;
+            word-wrap: break-word;
+            vertical-align: baseline;
+        }
+        
+        .text-style1 {
+            display: inline;
+            line-height: 1.46;
+            word-wrap: break-word;
+            margin: .2rem 0 0;
+        }
+        
+        .description-card {
+            width: 55%;
+            position: relative;
+            z-index: 1;
+            margin-left: 3.6rem;
+            cursor: pointer;
+            background-size: contain;
+        }
+        
+        .description-card img {
+            width: 100%;
+            border-radius: 1.6rem;
+            box-shadow: 0 0 45px 15px hsla(0, 0%, 78%, .1);
+        }
+        
+        .description-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 6.4rem;
+            height: 6.4rem;
+            transition: transform .25s cubic-bezier(.33,.04,.63,.93) 0s;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .description-play img {
+            color: transparent;
+        }
+        
+        .tab-container {
+            margin: 0 6rem;
+            padding: .8rem 0;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        
+        .list-container {
+            margin: 0 6rem;
+            padding: 1.2rem 0;
+        }
+        
+        .episode-item-container {
+            padding: 1.2rem 0;
+            display: flex;
+        }
+        
+        .inner-content {
+            display: flex;
+        }
+        
+        .thumbnail-card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 14.1rem;
+            width: 25rem;
+            border-radius: .6rem;
+            object-fit: contain;
+        }
+        
+        .thumbnail-card img {
+            display: flex;
+            width: 100%;
+        }
+        
+        .play-icon {
+            position: absolute;
+            width: 3rem;
+        }
+        
+        .episode-itemdetails {
+            margin-left: 0;
+            padding: 12px 80px 12px 28px;
+            width: calc(100% - 250px);
+            font-size: 16px;
+            line-height: 1.5;
+            font-weight: 400;
+            background-color: hsla(186, 4%, 46%, .1);
+        }
+        
+        .episode-no-heading {
+            display: block;
+            color: #fff;
+            margin-bottom: 1.2rem;
+        }
+        
+        .ep-sypnosis {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            color: #717a7b;
+            margin: 0;
+            margin-bottom: 1.2rem;
+            word-wrap: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+        }
+        
+        .date-details {
+            font-size: 1.4rem;
+            margin: 0;
+            color : #717a7b;
+            line-height:1
+        }
+        
+        /* Video Player Styles */
+        .video-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+        
+        .og-video {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .og-video video {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .cross-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+        
+        .cross-button {
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            transition: transform .1s ease-in;
+        }
+        
+        .cross-button:hover {
+            color: red;
+            transform: scale(1.3);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #1a242f;
+            padding: 30px 5%;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .footer-links a {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+        
+        .social-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            font-size: 20px;
+            color: #7f8c8d;
+        }
+        
+        .social-icons a:hover {
+            color: #ffffff;
+        }
+        
+        .app-download {
+            margin-top: 15px;
+        }
+        
+        .app-download img {
+            width: 120px;
+            margin-bottom: 10px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #2c3e50;
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .search-bar {
+                width: 100%;
+            }
+            
+            .content-card {
+                min-width: 120px;
+            }
+            
+            .card-image {
+                height: 150px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            
+            .description-card-container {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            .description-data, .description-card {
+                width: 100%;
+                margin-right: 0;
+                margin-left: 0;
+                margin-bottom: 20px;
+            }
+            
+            .tab-container, .list-container {
+                margin: 0 20px;
+            }
+            
+            .episode-item-container {
+                flex-direction: column;
+            }
+            
+            .thumbnail-card {
+                width: 100%;
+                height: auto;
+            }
+            
+            .episode-itemdetails {
+                width: 100%;
+                padding: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 18px;
+            }
+            
+            .content-card {
+                min-width: 100px;
+            }
+            
+            .card-image {
+                height: 120px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="user-info" style="display: none;"></div>
+    
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/MiniTV.png" alt="Amazon Mini TV">
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for series, shorts...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="nav-links">
+            <a href="#" id="home-link" class="active">Home</a>
+            <a href="watch\snips.html" id="shorts-link">Snips</a>
+        </div>
+        <div class="auth-buttons" id="auth-buttons">
+            <a href="index.html" class="login-btn">Login</a>
+            <a href="register.html" class="register-btn">Register</a>
+        </div>
+    </nav>
+
+
+    <div id="main-content">
+  
+        <div class="genre-section">
+            <div class="section-header">
+                <h2 class="section-title">Must Try from Other Genres!</h2>
+                <span class="see-all">See All</span>
+            </div>
+            <div class="content-carousel" id="other-genres-carousel">
+                <!-- Manually added content cards -->
+                <div class="content-card" data-series="mirzapur">
+                    <img src="images\sample19.jpg" class="card-image">
+                    <div class="card-info">
+                   
+                        <p class="card-meta">Crime, Action • Season 3</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="family-man">
+                    <img src="images\sample18.jpg" class="card-image">
+                    <div class="card-info">
+                       
+                        <p class="card-meta">Action, Thriller • Season 2</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="panchayat">
+                    <img src="images\sample17.jpg" class="card-image">
+                    <div class="card-info">
+                       
+                        <p class="card-meta">Comedy, Drama • Season 2</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="aspirants">
+                    <img src="images\sample16.jpg" class="card-image">
+                    <div class="card-info">
+                
+                        <p class="card-meta">Drama • Season 1</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="kota-factory">
+                    <img src="images\sample15.jpg" class="card-image">
+                    <div class="card-info">
+      
+                        <p class="card-meta">Comedy, Drama • Season 3</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="gullak">
+                    <img src="images\sample14.jpg" class="card-image">
+                    <div class="card-info">
+               
+                        <p class="card-meta">Comedy, Drama • Season 4</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+        <div class="genre-section">
+            <div class="section-header">
+                <h2 class="section-title">Top Turkish Shows</h2>
+            </div>
+            <div class="content-carousel" id="turkish-shows-carousel">
+                <!-- Manually added content cards -->
+                <div class="content-card" data-series="ertugrul">
+                    <img src="images\sample13.jpg" class="card-image">
+                    <div class="card-info">
+             
+                        <p class="card-meta">Historical, Drama • Season 5</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="osman">
+                    <img src="images\sample12.jpg" class="card-image">
+                    <div class="card-info">
+    
+                        <p class="card-meta">Historical, Action • Season 4</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="magnificent-century">
+                    <img src="images\sample10.jpg" class="card-image">
+                    <div class="card-info">
+              
+                        <p class="card-meta">Historical, Drama • Season 4</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="protector">
+                    <img src="images\sample9.jpg" class="card-image">
+                    <div class="card-info">
+                  
+                        <p class="card-meta">Fantasy, Action • Season 4</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="ethos">
+                    <img src="images\sample8.jpg" class="card-image">
+                    <div class="card-info">
+                        <h3 class="card-title">Ethos</h3>
+                        <p class="card-meta">Drama • Season 1</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="gift">
+                    <img src="images\sample7.jpg" class="card-image">
+                    <div class="card-info">
+     
+                        <p class="card-meta">Drama, Mystery • Season 3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+ 
+        <div class="genre-section">
+            <div class="section-header">
+                <h2 class="section-title">Light Hearted Shows</h2>
+                <span class="see-all">See All</span>
+            </div>
+            <div class="content-carousel" id="light-hearted-carousel">
+                <!-- Manually added content cards -->
+                <div class="content-card" data-series="tripling">
+                    <img src="images\sample6.jpg" class="card-image">
+                    <div class="card-info">
+                
+                        <p class="card-meta">Comedy, Drama • Season 3</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="pitchers">
+                    <img src="images\sample5.jpg" class="card-image">
+                    <div class="card-info">
+                        
+                        <p class="card-meta">Comedy, Drama • Season 2</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="gullak">
+                    <img src="images\sample4.jpg" class="card-image">
+                    <div class="card-info">
+                    
+                        <p class="card-meta">Comedy, Drama • Season 4</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="cubicles">
+                    <img src="images\sample3.jpg" class="card-image">
+                    <div class="card-info">
+              
+                        <p class="card-meta">Comedy, Drama • Season 2</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="engineering-girls">
+                    <img src="images\sample2.jpg" class="card-image">
+                    <div class="card-info">
+                
+                        <p class="card-meta">Comedy • Season 1</p>
+                    </div>
+                </div>
+                <div class="content-card" data-series="hostel-daze">
+                    <img src="images\sample1.jpg" class="card-image">
+                    <div class="card-info">
+                      
+                        <p class="card-meta">Comedy • Season 3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="categories-section">
+            <div class="categories-grid">
+                <div class="category-card">My Original</div>
+                <div class="category-card">Movies by Language</div>
+                <div class="category-card">Movies by Genre</div>
+                <div class="category-card">Down the Lane</div>
+                <div class="category-card">2024 Hindi Movies</div>
+                <div class="category-card">2023 Web Series</div>
+                <div class="category-card">New Shows</div>
+                <div class="category-card">International Shows</div>
+            </div>
+        </div>
+
+
+
+    <div id="series-detail-page" class="series-detail-page">
+        <div class="description-card-container">
+            <div class="background-hero-image">
+                <img src="demo.jpg" class="hero-img">
+                <div class="overlay"></div>
+            </div>
+            <div class="description-data">
+                <div class="title-container">
+                    <h1 id="series-title" class="title season episode" style="color:white">
+                        Sisterhood
+                        <span class="title-seprator">|</span>
+                        <span id="series-season">Season 1</span>
+                        <span class="title-seprator">|</span>
+                        <span id="series-episode">Episode 1</span>
+                    </h1>
+                </div>
+                <div class="rating-detail">
+                    <p id="episode-title">The First Day</p>
+                    <p id="series-creator">TVF</p>
+                    <span class="badge-container">U/A 16+</span>
+                </div>
+                <div class="button-container">
+                    <button type="button" class="button-1" id="continue-watching">
+                        <i class="fas fa-play" style="margin-right: 8px;"></i>
+                        <p class="button-title">Continue Watching S1 E1</p>
+                    </button>
+                </div>
+                <div class="sypnosis-container">
+                    <div class="sypnosis-ptext">
+                        <div id="series-synopsis" class="main-sypnosis">
+                            Nikita must pay a fine but doesn't have the money for it and plans to steal from the might box by crossing Gargi, the new entrant. Zoya must help Ann, the repeater to improve her grades this year.
+                        </div>
+                        <div class="second-sypnosis main sypnosis">
+                            <p id="series-cast" class="text-style1">
+                                Starring: Nidhi Bhanushali, Bhagyashree Limaye, Anvesha Vij, Nitya Mathur, Saumya Uniyal
+                            </p>
+                            <p id="series-language" class="text-style1">Language: Hindi</p>
+                            <p id="series-genre" class="text-style1">Genre: Drama, Comedy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="disclaimer-row">
+                    <p class="disclaimer-text">Viewer discretion advised.</p>
+                    <span class="description-row">More</span>
+                </div>
+            </div>
+            <div class="description-card" id="series-play-button">
+                <img src="demo.jpg">
+                <div class="description-play">
+                    <i class="fas fa-play" style="font-size: 3rem; color: white;"></i>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="tab-container">
+                <div class="list-container" id="episodes-list">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Amazon HX Player</h3>
+                <p>Your one-stop destination for all your entertainment such as latest movies, most popular web shows, Live TV channels, newly released songs etc.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Company</h3>
+                <div class="footer-links">
+                    <a href="#">About Us</a>
+                    <a href="#">Download Apps</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Contact Us</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="admin\admin\admin-login.html">Admin Panel</a>
+                    <a href="#">Compliance Report</a>
+                </div>
+            </div>
+            
+            <div class="footer-section social-section">
+                <h3>Follow us for updates</h3>
+                <div class="app-download">
+                    <p>Install our Mobile App for Best Experience</p>
+                    <img src="C:\Users\DELL\OneDrive\Desktop\amazon\images\2e8361f434554232638b17592edaa8259949e00132aabad08aeb76821b7dfc1f.__SX420__SY236.25__QL60__._TTW_.jpg" alt="Download App">
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2024 Amazon Mini TV Clone. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
+    
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBS3dxYFq28ODSBJOkQyQ-JvStbVJ0J484",
+            authDomain: "mini-tv-clone.firebaseapp.com",
+            projectId: "mini-tv-clone",
+            storageBucket: "mini-tv-clone.appspot.com",
+            messagingSenderId: "606463078554",
+            appId: "1:606463078554:web:5a3116d62136f6d520ef23",
+            measurementId: "G-7M4TLSVBC2"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        
+        // DOM Elements
+        const mainContent = document.getElementById('main-content');
+        const seriesDetailPage = document.getElementById('series-detail-page');
+        const videoContainer = document.getElementById('video-container');
+        const videoPlayer = document.getElementById('my-video');
+        const crossButton = document.querySelector('.cross-button');
+        const homeLink = document.getElementById('home-link');
+        const seriesLink = document.getElementById('series-link');
+        const shortsLink = document.getElementById('shorts-link');
+        
+        // Auth state management
+        const auth = firebase.auth();
+        const userInfoDiv = document.getElementById('user-info');
+        const authButtonsDiv = document.getElementById('auth-buttons');
+        
+        // Sample data for web series
+        const webSeriesData = {
+            "sisterhood": {
+                title: "Sisterhood",
+                season: "Season 1",
+                creator: "TVF",
+                synopsis: "Nikita must pay a fine but doesn't have the money for it and plans to steal from the might box by crossing Gargi, the new entrant. Zoya must help Ann, the repeater to improve her grades this year.",
+                cast: "Starring: Nidhi Bhanushali, Bhagyashree Limaye, Anvesha Vij, Nitya Mathur, Saumya Uniyal",
+                language: "Language: Hindi",
+                genre: "Genre: Drama, Comedy",
+                episodes: [
+                    {
+                        number: "E1",
+                        title: "The First Day",
+                        synopsis: "Nikita must pay a fine but doesn't have the money for it and plans to steal from the might box by crossing Gargi, the new entrant. Zoya must help Ann, the repeater to improve her grades this year.",
+                        date: "Jun 13, 2024",
+                        duration: "25 min",
+                        videoUrl: "17.09.2024_12.45.36_REC.mp4"
+                    },
+                    {
+                        number: "E2",
+                        title: "New Challenges",
+                        synopsis: "The girls face new challenges as they navigate through college life and friendships.",
+                        date: "Jun 20, 2024",
+                        duration: "24 min",
+                        videoUrl: "17.09.2024_12.45.36_REC.mp4"
+                    },
+                    {
+                        number: "E3",
+                        title: "Unexpected Turns",
+                        synopsis: "Relationships take unexpected turns as secrets are revealed among the friends.",
+                        date: "Jun 27, 2024",
+                        duration: "26 min",
+                        videoUrl: "17.09.2024_12.45.36_REC.mp4"
+                    }
+                ]
+            },
+            "scam-1992": {
+                title: "Scam 1992",
+                season: "Season 1",
+                creator: "Hansal Mehta",
+                synopsis: "The rise and fall of India's most infamous stockbroker, Harshad Mehta, who took the stock market to dizzying heights and his catastrophic downfall.",
+                cast: "Starring: Pratik Gandhi, Shreya Dhanwanthary, Hemant Kher",
+                language: "Language: Hindi",
+                genre: "Genre: Drama, Crime",
+                episodes: [
+                    {
+                        number: "E1",
+                        title: "The Big Bull",
+                        synopsis: "Harshad Mehta arrives in Mumbai with dreams of making it big in the stock market.",
+                        date: "Oct 9, 2020",
+                        duration: "54 min",
+                        videoUrl: "17.09.2024_12.45.36_REC.mp4"
+                    },
+                    {
+                        number: "E2",
+                        title: "The System",
+                        synopsis: "Harshad learns the ropes of the stock market and discovers loopholes in the system.",
+                        date: "Oct 9, 2020",
+                        duration: "52 min",
+                        videoUrl: "17.09.2024_12.45.36_REC.mp4"
+                    }
+                ]
+            }
+        };
+        
+        // Auth state changed handler
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                const username = user.displayName || user.email;
+                
+                // Update top right auth buttons
+                authButtonsDiv.innerHTML = `
+                    <span class="welcome-message">Welcome, <b>${username}</b></span>
+                    <button class="logout-btn" id="nav-logout-btn">Logout</button>
+                `;
+                
+                // Update main content user info
+                userInfoDiv.innerHTML = `
+                    Welcome, <strong>${username}</strong> |
+                    <button class="logout-btn" id="main-logout-btn">Logout</button>
+                `;
+                userInfoDiv.style.display = 'block';
+                
+                // Add event listeners to both logout buttons
+                document.getElementById('nav-logout-btn').addEventListener('click', logoutUser);
+                document.getElementById('main-logout-btn').addEventListener('click', logoutUser);
+            } else {
+                // Not logged in
+                authButtonsDiv.innerHTML = `
+                    <a href="index.html" class="login-btn">Login</a>
+                    <a href="register.html" class="register-btn">Register</a>
+                `;
+                
+                userInfoDiv.innerHTML = `
+                    <a href="login.html">Login</a> |
+                    <a href="register.html">Register</a>
+                `;
+                userInfoDiv.style.display = 'none';
+            }
+        });
+        
+        function logoutUser() {
+            auth.signOut().then(() => {
+                window.location.href = 'register.html';
+            }).catch(error => {
+                console.error('Logout error:', error);
+            });
+        }
+        
+        // Navigation handlers
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            mainContent.style.display = 'block';
+            seriesDetailPage.style.display = 'none';
+            document.querySelector('.nav-links a.active').classList.remove('active');
+            homeLink.classList.add('active');
+        });
+        
+        seriesLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            mainContent.style.display = 'block';
+            seriesDetailPage.style.display = 'none';
+            document.querySelector('.nav-links a.active').classList.remove('active');
+            seriesLink.classList.add('active');
+        });
+        // Video player controls
+        function showVideoPlayer(videoUrl) {
+            videoPlayer.src = videoUrl;
+            videoContainer.style.display = 'block';
+            mainContent.style.display = 'none';
+            seriesDetailPage.style.display = 'none';
+            videoPlayer.play();
+        }
+        
+        function hideVideoPlayer() {
+            videoContainer.style.display = 'none';
+            videoPlayer.pause();
+            
+            if (seriesDetailPage.style.display === 'block') {
+                seriesDetailPage.style.display = 'block';
+            } else {
+                mainContent.style.display = 'block';
+            }
+        }
+        
+        crossButton.addEventListener('click', hideVideoPlayer);
+        
+        // Load series detail page
+        function loadSeriesDetail(seriesId) {
+            const series = webSeriesData[seriesId];
+            if (!series) return;
+            
+            // Update series info
+            document.getElementById('series-title').innerHTML = `
+                ${series.title}
+                <span class="title-seprator">|</span>
+                <span>${series.season}</span>
+            `;
+            document.getElementById('series-creator').textContent = series.creator;
+            document.getElementById('series-synopsis').textContent = series.synopsis;
+            document.getElementById('series-cast').textContent = series.cast;
+            document.getElementById('series-language').textContent = series.language;
+            document.getElementById('series-genre').textContent = series.genre;
+            
+            // Update first episode info
+            if (series.episodes.length > 0) {
+                const firstEpisode = series.episodes[0];
+                document.getElementById('episode-title').textContent = firstEpisode.title;
+                document.getElementById('series-episode').textContent = `Episode 1`;
+                
+                // Update continue watching button
+                document.querySelector('.button-title').textContent = `Continue Watching ${series.season} E1`;
+            }
+            
+            // Load episodes list
+            const episodesList = document.getElementById('episodes-list');
+            episodesList.innerHTML = '';
+            
+            series.episodes.forEach((episode, index) => {
+                const episodeElement = document.createElement('div');
+                episodeElement.innerHTML = `
+                    <div class="episode-item-container">
+                        <div class="inner-content">
+                            <a href="#" class="play-episode" data-index="${index}">
+                                <div class="thumbnail-card">
+                                    <img src="demo.jpg">
+                                    <span class="play-icon"><i class="fas fa-play"></i></span>
+                                </div>
+                            </a>
+                            <div class="episode-itemdetails">
+                                <div class="episode-no-heading">
+                                    ${episode.number} | ${episode.title}
+                                </div>
+                                <p class="ep-sypnosis">${episode.synopsis}</p>
+                                <p class="date-details">
+                                    ${episode.date}
+                                    <span class="title-seprator">|</span>
+                                    <span class="duration">${episode.duration}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                episodesList.appendChild(episodeElement);
+            });
+            
+            // Add event listeners to episode play buttons
+            document.querySelectorAll('.play-episode').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const episodeIndex = parseInt(button.getAttribute('data-index'));
+                    const episode = series.episodes[episodeIndex];
+                    showVideoPlayer(episode.videoUrl);
+                });
+            });
+            
+            // Show the series detail page
+            mainContent.style.display = 'none';
+            seriesDetailPage.style.display = 'block';
+        }
+        
+        // Add event listener to series play button
+        document.getElementById('series-play-button').addEventListener('click', () => {
+            const seriesId = 'sisterhood'; // Default to sisterhood for demo
+            const series = webSeriesData[seriesId];
+            if (series.episodes.length > 0) {
+                showVideoPlayer(series.episodes[0].videoUrl);
+            }
+        });
+        
+        // Add event listener to continue watching button
+        document.getElementById('continue-watching').addEventListener('click', () => {
+            const seriesId = 'sisterhood'; // Default to sisterhood for demo
+            const series = webSeriesData[seriesId];
+            if (series.episodes.length > 0) {
+                showVideoPlayer(series.episodes[0].videoUrl);
+            }
+        });
+        
+        // Initialize carousels interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event to series cards
+            document.querySelectorAll('.content-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    // For demo purposes, we'll just load the sisterhood series
+                    loadSeriesDetail('sisterhood');
+                });
+            });
+            
+            // Add horizontal scrolling with mouse drag
+            const carouselElements = document.querySelectorAll('.content-carousel');
+            
+            carouselElements.forEach(carousel => {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+                
+                carousel.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    startX = e.pageX - carousel.offsetLeft;
+                    scrollLeft = carousel.scrollLeft;
+                    carousel.style.cursor = 'grabbing';
+                });
+                
+                carousel.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    carousel.style.cursor = 'grab';
+                });
+                
+                carousel.addEventListener('mouseup', () => {
+                    isDown = false;
+                    carousel.style.cursor = 'grab';
+                });
+                
+                carousel.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - carousel.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    carousel.scrollLeft = scrollLeft - walk;
+                });
+                
+                // Add touch support for mobile
+                carousel.addEventListener('touchstart', (e) => {
+                    isDown = true;
+                    startX = e.touches[0].pageX - carousel.offsetLeft;
+                    scrollLeft = carousel.scrollLeft;
+                });
+                
+                carousel.addEventListener('touchend', () => {
+                    isDown = false;
+                });
+                
+                carousel.addEventListener('touchmove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.touches[0].pageX - carousel.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    carousel.scrollLeft = scrollLeft - walk;
+                });
+            });
+            
+            // Infinite scroll detection
+            window.addEventListener('scroll', function() {
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+                    // Load more content when near bottom
+                    console.log('Load more content...');
+                    // In a real app, you would fetch more data here
+                }
+            });
+        });
+    </script>
+</body>
+</html>

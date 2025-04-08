@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | Amazon Mini TV Clone</title>
+    <link rel="stylesheet" href="../css/user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="user-navbar">
+        <div class="logo">
+            <img src="../images/amazon-mini-logo.jpg" alt="Amazon Mini TV">
+        </div>
+        <div class="user-nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="upload-short.html">Upload Short</a>
+            <a href="analytics.html" class="active">Analytics</a>
+            <a href="profile.html">Profile</a>
+        </div>
+        <div class="user-auth-buttons">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </nav>
+
+    <div class="analytics-container">
+        <h1>Content Analytics</h1>
+        
+        <div class="analytics-filters">
+            <select id="time-period">
+                <option value="7">Last 7 days</option>
+                <option value="30" selected>Last 30 days</option>
+                <option value="90">Last 90 days</option>
+                <option value="all">All time</option>
+            </select>
+            <select id="content-type">
+                <option value="all">All Content</option>
+                <option value="shorts">Shorts Only</option>
+            </select>
+        </div>
+        
+        <div class="analytics-overview">
+            <div class="overview-card">
+                <h3>Total Views</h3>
+                <p id="total-views">0</p>
+                <div class="trend up">
+                    <i class="fas fa-arrow-up"></i>
+                    <span id="views-change">0%</span>
+                </div>
+            </div>
+            <div class="overview-card">
+                <h3>Watch Time</h3>
+                <p id="watch-time">0</p>
+                <div class="trend up">
+                    <i class="fas fa-arrow-up"></i>
+                    <span id="watch-time-change">0%</span>
+                </div>
+            </div>
+            <div class="overview-card">
+                <h3>Subscribers</h3>
+                <p id="subscribers">0</p>
+                <div class="trend up">
+                    <i class="fas fa-arrow-up"></i>
+                    <span id="subscribers-change">0%</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="analytics-charts">
+            <div class="chart-container">
+                <h3>Views Over Time</h3>
+                <canvas id="views-chart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Top Shorts</h3>
+                <div class="top-shorts" id="top-shorts">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="analytics-table">
+            <h3>All Shorts Performance</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Short</th>
+                        <th>Views</th>
+                        <th>Likes</th>
+                        <th>Comments</th>
+                        <th>Shares</th>
+                        <th>Watch Time</th>
+                    </tr>
+                </thead>
+                <tbody id="shorts-table">
+                    <!-- Will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script src="../js/auth.js"></script>
+    
+    <script>
+        // DOM Elements
+        const timePeriodSelect = document.getElementById('time-period');
+        const contentTypeSelect = document.getElementById('content-type');
+        
+        // Load analytics data
+        function loadAnalyticsData() {
+            const user = auth.currentUser;
+            if (user) {
+                // Load overview stats
+                loadOverviewStats(user.uid);
+                
+                // Initialize charts
+                initViewsChart(user.uid);
+                
+                // Load top shorts
+                loadTopShorts(user.uid);
+                
+                // Load all shorts performance
+                loadAllShortsPerformance(user.uid);
+            }
+        }
+        
+        // Load overview stats
+        function loadOverviewStats(userId) {
+            // In a real app, you would fetch actual data from Firestore
+            // This is just placeholder data
+            document.getElementById('total-views').textContent = '1,234';
+            document.getElementById('watch-time').textContent = '45 hours';
+            document.getElementById('subscribers').textContent = '56';
+            
+            document.getElementById('views-change').textContent = '12%';
+            document.getElementById('watch-time-change').textContent = '8%';
+            document.getElementById('subscribers-change').textContent = '5%';
+        }
+        
+        // Initialize views chart
+        function initViewsChart(userId) {
+            // In a real app, you would fetch actual data from Firestore
+            // This is just a placeholder with sample data
+            const ctx = document.getElementById('views-chart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Views',
+                        data: [120, 190, 300, 500],
+                        backgroundColor: '#00a8e1',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Load top shorts
+        function loadTopShorts(userId) {
+            db.collection('shorts').where('creatorId', '==', userId)
+                .orderBy('views', 'desc').limit(3).get()
+                .then(querySnapshot => {
+                    const topShortsContainer = document.getElementById('top-shorts');
+                    topShortsContainer.innerHTML = '';
+                    
+                    querySnapshot.forEach(doc => {
+                        const short = doc.data();
+                        topShortsContainer.innerHTML += `
+                            <div class="top-short">
+                                <div class="short-thumbnail">
+                                    <img src="${short.thumbnail}" alt="${short.title}">
+                                </div>
+                                <div class="short-stats">
+                                    <h4>${short.title}</h4>
+                                    <p>${short.views} views</p>
+                                    <p>${short.likes} likes</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                });
+        }
+        
+        // Load all shorts performance
+        function loadAllShortsPerformance(userId) {
+            db.collection('shorts').where('creatorId', '==', userId)
+                .orderBy('timestamp', 'desc').get()
+                .then(querySnapshot => {
+                    const shortsTable = document.getElementById('shorts-table');
+                    shortsTable.innerHTML = '';
+                    
+                    querySnapshot.forEach(doc => {
+                        const short = doc.data();
+                        shortsTable.innerHTML += `
+                            <tr>
+                                <td>${short.title}</td>
+                                <td>${short.views || 0}</td>
+                                <td>${short.likes || 0}</td>
+                                <td>${short.comments || 0}</td>
+                                <td>${short.shares || 0}</td>
+                                <td>${Math.floor((short.views || 0) * 0.7)}%</td>
+                            </tr>
+                        `;
+                    });
+                });
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAnalyticsData();
+            
+            // Add event listeners for filters
+            timePeriodSelect.addEventListener('change', loadAnalyticsData);
+            contentTypeSelect.addEventListener('change', loadAnalyticsData);
+        });
+    </script>
+</body>
+</html>

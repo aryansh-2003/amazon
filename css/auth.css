@@ -1,0 +1,129 @@
+/* Auth Pages Styling */
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #0f171e;
+    color: #ffffff;
+    padding: 20px;
+}
+
+.auth-logo {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.auth-logo img {
+    height: 40px;
+}
+
+.auth-form {
+    background-color: #1a242f;
+    border-radius: 8px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.auth-form h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #2c3e50;
+    border-radius: 4px;
+    background-color: #0f171e;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #00a8e1;
+    box-shadow: 0 0 0 2px rgba(0, 168, 225, 0.2);
+}
+
+.hint {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-top: 5px;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #00a8e1;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.auth-button:hover {
+    background-color: #0088b9;
+}
+
+.auth-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.auth-footer a {
+    color: #00a8e1;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Password visibility toggle */
+.password-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #7f8c8d;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .auth-form {
+        padding: 20px;
+    }
+    
+    .auth-form h1 {
+        font-size: 24px;
+    }
+}
